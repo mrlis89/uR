@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">uR</string>
+    <string name="login_via_reddit">login via reddit</string>
+    <string name="title_feed">Feed</string>
+    <string name="title_favorite">Favorite</string>
+    <string name="title_profile">Profile</string>
 </resources>
