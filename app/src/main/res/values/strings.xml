@@ -1,7 +1,21 @@
 <resources>
     <string name="app_name">uR</string>
-    <string name="login_via_reddit">login via reddit</string>
+    <string name="login_via_reddit">Войти</string>
     <string name="title_feed">Feed</string>
     <string name="title_favorite">Favorite</string>
     <string name="title_profile">Profile</string>
+    <string name="title_activity_onboarding">OnboardingActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="onboard_text_first_header">Добро пожаловать в Humblr</string>
+    <string name="onboard_text_first">Здесь собраны сообщества по всевозможным интересам</string>
+    <string name="onboard_text_second_header">SubHumblr</string>
+    <string name="onboard_text_second">Ты можешь найти новые сабы по интересам и посмотреть сабы, на которые подписан</string>
+    <string name="onboard_text_third_header">Делись и сохраняй</string>
+    <string name="onboard_text_third">Вкладка избранное хранит закладки с комментариями и сабами. В профиле ты найдёшь информацию о себе.
+</string>
 </resources>

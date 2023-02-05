@@ -1,4 +1,4 @@
-package com.arnava.ur.ui.activity
+package com.arnava.ur.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,8 +10,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import com.arnava.ur.R
 import com.arnava.ur.databinding.FragmentAuthBinding
 import com.arnava.ur.ui.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint

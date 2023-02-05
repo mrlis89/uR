@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/authFragment"
-        android:name="com.arnava.ur.ui.activity.AuthFragment"
+        android:name="com.arnava.ur.ui.fragment.AuthFragment"
         android:label="AuthFragment"
         tools:layout="@layout/fragment_auth"/>
 </navigation>
