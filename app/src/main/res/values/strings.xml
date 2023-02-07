@@ -18,4 +18,7 @@
     <string name="onboard_text_third_header">Делись и сохраняй</string>
     <string name="onboard_text_third">Вкладка избранное хранит закладки с комментариями и сабами. В профиле ты найдёшь информацию о себе.
 </string>
+    <string name="humblr_text">Найди единомышленников с Humblr</string>
+    <string name="skip_text">Пропустить</string>
+    <string name="complete_text">Готово</string>
 </resources>

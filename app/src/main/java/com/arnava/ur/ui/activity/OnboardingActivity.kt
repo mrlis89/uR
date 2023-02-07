@@ -12,7 +12,6 @@ import com.arnava.ur.ui.fragment.onboarding.ThirdFragment
 
 class OnboardingActivity : AppCompatActivity() {
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityOnboardingBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,10 +19,6 @@ class OnboardingActivity : AppCompatActivity() {
 
         binding = ActivityOnboardingBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-//        val navHostFragment =
-//            supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_onboarding) as NavHostFragment
-//        val navController = navHostFragment.navController
 
         binding.viewPager.adapter = ViewPagerFragmentAdapter(
             this, listOf(

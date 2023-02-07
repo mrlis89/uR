@@ -15,14 +15,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UR"
         tools:targetApi="33">
-<!--        <activity-->
-<!--            android:name=".ui.activity.OnboardingActivity"-->
-<!--            android:exported="false"-->
-<!--            android:label="@string/title_activity_onboarding"-->
-<!--            android:theme="@style/Theme.UR.NoActionBar">-->
-<!--        </activity>-->
         <activity
             android:name=".ui.activity.OnboardingActivity"
+            android:exported="false"
+            android:label="@string/title_activity_onboarding">
+        </activity>
+        <activity
+            android:name=".ui.activity.AuthActivity"
+            android:exported="false"
+            android:label="@string/title_activity_onboarding">
+        </activity>
+        <activity
+            android:name=".ui.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

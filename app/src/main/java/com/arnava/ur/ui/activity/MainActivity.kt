@@ -1,8 +1,12 @@
 package com.arnava.ur.ui.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.arnava.ur.R
 import com.arnava.ur.databinding.ActivityMainBinding
@@ -38,6 +42,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             true
+        }
+
+        if (authViewModel.isFirstRun()) {
+            val intent = Intent(this, OnboardingActivity::class.java)
+            startActivity(intent)
         }
 
     }

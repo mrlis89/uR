@@ -3,11 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/authFragment">
+    app:startDestination="@id/navigation_feed">
 
     <fragment
-        android:id="@+id/authFragment"
-        android:name="com.arnava.ur.ui.fragment.AuthFragment"
-        android:label="AuthFragment"
-        tools:layout="@layout/fragment_auth"/>
+        android:id="@+id/navigation_feed"
+        android:name="com.arnava.ur.ui.fragment.FeedFragment"
+        android:label="FeedFragment" />
+    <fragment
+        android:id="@+id/navigation_favorite"
+        android:name="com.arnava.ur.ui.fragment.FavoriteFragment"
+        android:label="FavoriteFragment" />
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.arnava.ur.ui.fragment.ProfileFragment"
+        android:label="ProfileFragment" />
 </navigation>

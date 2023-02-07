@@ -75,7 +75,7 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun authorizeAndWait(authResponseResult: ActivityResultLauncher<Intent?>) {
+    fun authorizeAndWait(activityResultLauncher: ActivityResultLauncher<Intent?>) {
         val customTabsIntent = CustomTabsIntent.Builder().build()
         customTabsIntent.intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND)
         val authRequest = authRepository.getAuthRequest()
@@ -83,7 +83,7 @@ class AuthViewModel @Inject constructor(
             authRequest,
             customTabsIntent
         )
-        authResponseResult.launch(openAuthPageIntent)
+        activityResultLauncher.launch(openAuthPageIntent)
     }
 
     fun isFirstRun() = localRepository.isFirstRun()
