@@ -6,7 +6,7 @@ import retrofit2.http.*
 
 interface RedditMainApi {
 
-    @GET("top")
+    @GET("subreddits/popular")
     suspend fun getTopSubreddits(
         @Query("after") page: String = ""
     ): Listing

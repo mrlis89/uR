@@ -28,7 +28,7 @@ class PagedSubredditListAdapter(
             subredditDescription.text = subreddit?.description
             Glide
                 .with(holder.itemView)
-                .load(subreddit?.bannerImg)
+                .load(subreddit?.headerImg)
                 .apply(
                     RequestOptions()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)

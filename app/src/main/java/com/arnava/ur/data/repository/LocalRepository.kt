@@ -27,4 +27,5 @@ class LocalRepository @Inject constructor(private val sharedPreferences: SharedP
         editor.apply()
         return true
     }
+
 }

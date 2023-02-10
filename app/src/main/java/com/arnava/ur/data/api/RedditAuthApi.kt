@@ -17,9 +17,9 @@ interface RedditAuthApi {
     ): Response<Token>
 
     @POST("access_token")
-    fun renewToken(
+    suspend fun refreshToken(
         @Header("Authorization") header: String,
-        @Query("grant_type") grantType: String = "refresh_token",
+        @Query("grant_type") grantType: String,
         @Query("refresh_token") refreshToken: String
     ): Response<Token>
 

@@ -10,7 +10,9 @@ import androidx.lifecycle.lifecycleScope
 import com.arnava.ur.databinding.FragmentFeedBinding
 import com.arnava.ur.ui.adapter.PagedSubredditListAdapter
 import com.arnava.ur.ui.viewmodel.SubredditsViewModel
+import com.arnava.ur.utils.auth.TokenStorage
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 
 @AndroidEntryPoint
 class FeedFragment : Fragment() {
@@ -32,13 +34,25 @@ class FeedFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerView.adapter = pagedSubredditListAdapter
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            while (true) {
+                if (TokenStorage.accessToken == null) delay(500)
+                else {
+                    viewModel.loadTopList()
+                    println("DONE")
+                    break
+                }
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.pagedSubreddits.collect { pagingDataFlow ->
-                pagingDataFlow?.collect{
+                pagingDataFlow?.collect {
                     pagedSubredditListAdapter.submitData(it)
                 }
             }
         }
-        viewModel.loadTopList()
+//        binding.button.setOnClickListener {
+//            viewModel.loadTopList()
+//        }
     }
 
     override fun onDestroyView() {

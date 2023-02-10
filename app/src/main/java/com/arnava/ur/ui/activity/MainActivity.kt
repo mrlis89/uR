@@ -1,11 +1,9 @@
 package com.arnava.ur.ui.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.core.view.isVisible
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.arnava.ur.R
@@ -49,8 +47,12 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val intent = Intent(this, AuthActivity::class.java)
-        startActivity(intent)
+        if (authViewModel.hasRefreshToken()) {
+                authViewModel.refreshToken()
+        } else {
+            val intent = Intent(this, AuthActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 

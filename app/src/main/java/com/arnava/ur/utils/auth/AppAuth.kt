@@ -26,6 +26,7 @@ object AppAuth {
             redirectUri
         )
             .setScope(SCOPE)
+            .setAdditionalParameters(mapOf("duration" to "permanent"))
             .build()
     }
 

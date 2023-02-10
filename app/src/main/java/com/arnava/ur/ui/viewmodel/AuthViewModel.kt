@@ -76,8 +76,8 @@ class AuthViewModel @Inject constructor(
     }
 
     fun authorizeAndWait(activityResultLauncher: ActivityResultLauncher<Intent?>) {
-        val customTabsIntent = CustomTabsIntent.Builder().build()
-        customTabsIntent.intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND)
+        val customTabsIntent = CustomTabsIntent.Builder()
+            .build()
         val authRequest = authRepository.getAuthRequest()
         val openAuthPageIntent = authService.getAuthorizationRequestIntent(
             authRequest,
@@ -87,6 +87,13 @@ class AuthViewModel @Inject constructor(
     }
 
     fun isFirstRun() = localRepository.isFirstRun()
+
+    fun hasRefreshToken() = localRepository.getRefreshTokenLocally() != ""
+
+    fun refreshToken() =
+        viewModelScope.launch {
+            authRepository.refreshToken()
+        }
 
     override fun onCleared() {
         super.onCleared()

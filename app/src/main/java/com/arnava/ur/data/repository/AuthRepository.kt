@@ -35,4 +35,18 @@ class AuthRepository @Inject constructor(
             throw IOException(response.errorBody().toString())
         }
     }
+
+    suspend fun refreshToken() {
+        val response = redditAuthApi.refreshToken(
+            header = "Basic ${Base64.encodeToString("$CLIENT_ID:".toByteArray(), Base64.NO_WRAP)}",
+            grantType = "refresh_token",
+            refreshToken = localRepository.getRefreshTokenLocally()
+        )
+
+        if (response.isSuccessful) {
+            localRepository.saveTokens(response.body())
+        } else {
+            throw IOException(response.errorBody().toString())
+        }
+    }
 }

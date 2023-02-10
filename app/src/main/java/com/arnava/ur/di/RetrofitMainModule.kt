@@ -45,6 +45,7 @@ object RetrofitMainModule {
             )
             .addNetworkInterceptor(interceptor)
             .pingInterval(500, TimeUnit.MILLISECONDS)
+            .retryOnConnectionFailure(true)
             .build()
 
     @MainModule
