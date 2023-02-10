@@ -49,6 +49,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val intent = Intent(this, AuthActivity::class.java)
+        startActivity(intent)
+
     }
 
 }

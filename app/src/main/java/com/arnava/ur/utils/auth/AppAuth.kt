@@ -29,12 +29,6 @@ object AppAuth {
             .build()
     }
 
-    fun getEndSessionRequest(): EndSessionRequest {
-        return EndSessionRequest.Builder(serviceConfiguration)
-            .setPostLogoutRedirectUri(LOGOUT_CALLBACK_URL.toUri())
-            .build()
-    }
-
     fun getRefreshTokenRequest(refreshToken: String): TokenRequest {
         return TokenRequest.Builder(
             serviceConfiguration,

@@ -1,6 +1,7 @@
 package com.arnava.ur.di
 
 import com.arnava.ur.data.api.RedditAuthApi
+import com.arnava.ur.utils.auth.AuthModule
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,9 +17,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object RetrofitAuthModule {
 
-    @Provides
-    fun providesBaseUrl(): String = "https://www.reddit.com/api/v1/"
-
+    @AuthModule
     @Provides
     @Singleton
     fun providesOkHttpClient(): OkHttpClient =
@@ -30,18 +29,20 @@ object RetrofitAuthModule {
             .pingInterval(500, TimeUnit.MILLISECONDS)
             .build()
 
+    @AuthModule
     @Provides
     @Singleton
-    fun providesRetrofit(BASE_URL: String, okHttpClient: OkHttpClient): Retrofit =
+    fun providesRetrofit(@AuthModule okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .addConverterFactory(MoshiConverterFactory.create())
-            .baseUrl(BASE_URL)
+            .baseUrl("https://www.reddit.com/api/v1/")
             .client(okHttpClient)
             .build()
 
+
     @Provides
     @Singleton
-    fun providesUnsplashApi(retrofit: Retrofit): RedditAuthApi =
+    fun providesRedditAuthApi(@AuthModule retrofit: Retrofit): RedditAuthApi =
         retrofit.create(RedditAuthApi::class.java)
 
 }

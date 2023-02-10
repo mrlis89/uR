@@ -8,30 +8,25 @@ import retrofit2.http.*
 
 interface RedditAuthApi {
 
-    @POST()
+    @POST("access_token")
     suspend fun getAccessToken(
-        @Url url: String = "https://www.reddit.com/api/v1/access_token",
         @Header("Authorization") header: String,
         @Query("grant_type") grantType: String,
         @Query("code") code: String? = null,
         @Query("redirect_uri") redirectUrl: String? = null,
     ): Response<Token>
 
-    @POST
+    @POST("access_token")
     fun renewToken(
-        @Url url: String = "https://www.reddit.com/api/v1/access_token",
-        @HeaderMap header: HashMap<String, String>,
-
+        @Header("Authorization") header: String,
         @Query("grant_type") grantType: String = "refresh_token",
         @Query("refresh_token") refreshToken: String
-    ): Call<Token>
+    ): Response<Token>
 
-    @POST
-    fun revoke(
-        @Url url: String = "https://www.reddit.com/api/v1/revoke_token",
-        @HeaderMap header: HashMap<String, String>,
-
+    @POST("revoke_token")
+    fun revokeToken(
+        @Header("Authorization") header: String,
         @Query("token") token: String,
         @Query("token_type_hint") tokenTypeHint: String
-    ): Call<ResponseBody>
+    ): Response<ResponseBody>
 }

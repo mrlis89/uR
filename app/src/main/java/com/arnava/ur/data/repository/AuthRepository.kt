@@ -19,10 +19,6 @@ class AuthRepository @Inject constructor(
         return AppAuth.getAuthRequest()
     }
 
-    fun getEndSessionRequest(): EndSessionRequest {
-        return AppAuth.getEndSessionRequest()
-    }
-
     suspend fun getToken(
         authCode: String
     ) {

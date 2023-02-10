@@ -1,18 +1,24 @@
 package com.arnava.ur.ui.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.arnava.ur.databinding.FragmentFeedBinding
+import com.arnava.ur.ui.adapter.PagedSubredditListAdapter
+import com.arnava.ur.ui.viewmodel.SubredditsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class FeedFragment : Fragment() {
 
     private var _binding: FragmentFeedBinding? = null
-
     private val binding get() = _binding!!
+    private val viewModel: SubredditsViewModel by viewModels()
+    private val pagedSubredditListAdapter = PagedSubredditListAdapter {}
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,6 +30,15 @@ class FeedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.recyclerView.adapter = pagedSubredditListAdapter
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.pagedSubreddits.collect { pagingDataFlow ->
+                pagingDataFlow?.collect{
+                    pagedSubredditListAdapter.submitData(it)
+                }
+            }
+        }
+        viewModel.loadTopList()
     }
 
     override fun onDestroyView() {
