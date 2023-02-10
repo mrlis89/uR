@@ -2,6 +2,7 @@ package com.arnava.ur.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -33,11 +34,21 @@ class PagedSubredditListAdapter(
                     RequestOptions()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                 )
-                .placeholder(R.drawable.placeholder_photo)
                 .into(iconView)
 
-            root.setOnClickListener {
-
+            Glide
+                .with(holder.itemView)
+                .load(subreddit?.bannerImg)
+                .apply(
+                    RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                )
+                .placeholder(R.drawable.placeholder_photo)
+                .into(bannerView)
+            iconView.setOnClickListener {
+                if (subreddit?.bannerImg != "") {
+                    bannerView.isVisible = !bannerView.isVisible
+                }
             }
         }
 

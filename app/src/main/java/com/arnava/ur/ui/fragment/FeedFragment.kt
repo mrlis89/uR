@@ -50,9 +50,6 @@ class FeedFragment : Fragment() {
                 }
             }
         }
-//        binding.button.setOnClickListener {
-//            viewModel.loadTopList()
-//        }
     }
 
     override fun onDestroyView() {
