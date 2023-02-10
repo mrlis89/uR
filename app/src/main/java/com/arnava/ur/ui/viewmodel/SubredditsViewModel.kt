@@ -23,7 +23,7 @@ class SubredditsViewModel @Inject constructor(
     val pagedSubreddits = _pagedSubreddits.asStateFlow()
     fun loadTopList(){
         _pagedSubreddits.value = Pager(
-            config = PagingConfig(pageSize = 25),
+            config = PagingConfig(pageSize = 25,enablePlaceholders = false),
             pagingSourceFactory = {subredditPagingSource}
         ).flow.cachedIn(viewModelScope)
     }

@@ -16,6 +16,7 @@ import com.bumptech.glide.request.RequestOptions
 class PagedSubredditListAdapter(
     private val onPhotoClick: (Subreddit) -> Unit,
 ) : PagingDataAdapter<Subreddit, SubredditListViewHolder>(SubredditDiffUtilCallback()) {
+    private val itemExpandedMap = mutableMapOf<Int, Boolean>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubredditListViewHolder {
         val binding = SubredditLayoutBinding.inflate(LayoutInflater.from(parent.context))
@@ -24,6 +25,7 @@ class PagedSubredditListAdapter(
 
     override fun onBindViewHolder(holder: SubredditListViewHolder, position: Int) {
         val subreddit = getItem(position)?.data
+        itemExpandedMap.putIfAbsent(position, false)
         with(holder.binding) {
             subredditName.text = subreddit?.name
             subredditDescription.text = subreddit?.description
@@ -45,9 +47,11 @@ class PagedSubredditListAdapter(
                 )
                 .placeholder(R.drawable.placeholder_photo)
                 .into(bannerView)
+            bannerView.isVisible = itemExpandedMap[position] ?: false
             iconView.setOnClickListener {
                 if (subreddit?.bannerImg != "") {
                     bannerView.isVisible = !bannerView.isVisible
+                    itemExpandedMap[position] = !itemExpandedMap[position]!!
                 }
             }
         }
