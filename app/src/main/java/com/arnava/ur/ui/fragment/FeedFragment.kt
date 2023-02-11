@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.arnava.ur.databinding.FragmentFeedBinding
 import com.arnava.ur.ui.adapter.PagedSubredditListAdapter
-import com.arnava.ur.ui.viewmodel.SubredditsViewModel
+import com.arnava.ur.ui.viewmodel.PostViewModel
 import com.arnava.ur.utils.auth.TokenStorage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -19,7 +19,7 @@ class FeedFragment : Fragment() {
 
     private var _binding: FragmentFeedBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: SubredditsViewModel by viewModels()
+    private val viewModel: PostViewModel by viewModels()
     private val pagedSubredditListAdapter = PagedSubredditListAdapter {}
 
     override fun onCreateView(

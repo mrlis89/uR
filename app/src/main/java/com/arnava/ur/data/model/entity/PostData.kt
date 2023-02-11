@@ -1,12 +1,12 @@
-package com.thirdmono.reddit.data.entity
+package com.arnava.ur.data.model.entity
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class SubRedditData(
+data class PostData(
         @Json(name = "banner_img")
-        val bannerImg: String? = null,
+        val bannerImg: String?,
         @Json(name = "user_sr_theme_enabled")
         val userSrThemeEnabled: Boolean? = null,
         @Json(name = "submit_text_html")
@@ -19,8 +19,8 @@ data class SubRedditData(
         val showMedia: Boolean? = null,
         @Json(name = "id")
         val id: String? = null,
-        @Json(name = "submit_text")
-        val submitText: String? = null,
+        @Json(name = "selftext")
+        val selftext: String? = null,
         @Json(name = "display_name")
         val displayName: String? = null,
         @Json(name = "header_img")

@@ -6,50 +6,39 @@ import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.arnava.ur.R
-import com.arnava.ur.data.model.entity.Subreddit
-import com.arnava.ur.databinding.SubredditLayoutBinding
+import com.arnava.ur.data.model.entity.Post
+import com.arnava.ur.databinding.PostLayoutBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 
 class PagedSubredditListAdapter(
-    private val onPhotoClick: (Subreddit) -> Unit,
-) : PagingDataAdapter<Subreddit, SubredditListViewHolder>(SubredditDiffUtilCallback()) {
+    private val onPhotoClick: (Post) -> Unit,
+) : PagingDataAdapter<Post, SubredditListViewHolder>(SubredditDiffUtilCallback()) {
     private val itemExpandedMap = mutableMapOf<Int, Boolean>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubredditListViewHolder {
-        val binding = SubredditLayoutBinding.inflate(LayoutInflater.from(parent.context))
+        val binding = PostLayoutBinding.inflate(LayoutInflater.from(parent.context))
         return SubredditListViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: SubredditListViewHolder, position: Int) {
-        val subreddit = getItem(position)?.data
+        val postData = getItem(position)?.data
         itemExpandedMap.putIfAbsent(position, false)
         with(holder.binding) {
-            subredditName.text = subreddit?.name
-            subredditDescription.text = subreddit?.description
+            subredditName.text = postData?.title
             Glide
                 .with(holder.itemView)
-                .load(subreddit?.headerImg)
+                .load(postData?.url)
                 .apply(
                     RequestOptions()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                 )
-                .into(iconView)
-
-            Glide
-                .with(holder.itemView)
-                .load(subreddit?.bannerImg)
-                .apply(
-                    RequestOptions()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                )
-                .placeholder(R.drawable.placeholder_photo)
                 .into(bannerView)
+
             bannerView.isVisible = itemExpandedMap[position] ?: false
-            iconView.setOnClickListener {
-                if (subreddit?.bannerImg != "") {
+            subredditName.setOnClickListener {
+                if (postData?.url?.isImage() == true) {
                     bannerView.isVisible = !bannerView.isVisible
                     itemExpandedMap[position] = !itemExpandedMap[position]!!
                 }
@@ -57,15 +46,20 @@ class PagedSubredditListAdapter(
         }
 
     }
+
+    fun String.isImage(): Boolean {
+        val subStr = this.substring(this.length-3, this.length)
+        return (subStr == "jpg" || subStr == "png")
+    }
 }
 
 
-class SubredditListViewHolder(val binding: SubredditLayoutBinding) :
+class SubredditListViewHolder(val binding: PostLayoutBinding) :
     RecyclerView.ViewHolder(binding.root)
 
-class SubredditDiffUtilCallback : DiffUtil.ItemCallback<Subreddit>() {
-    override fun areItemsTheSame(oldItem: Subreddit, newItem: Subreddit) =
+class SubredditDiffUtilCallback : DiffUtil.ItemCallback<Post>() {
+    override fun areItemsTheSame(oldItem: Post, newItem: Post) =
         oldItem.data?.id == newItem.data?.id
 
-    override fun areContentsTheSame(oldItem: Subreddit, newItem: Subreddit) = oldItem == newItem
+    override fun areContentsTheSame(oldItem: Post, newItem: Post) = oldItem == newItem
 }
