@@ -6,11 +6,11 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class ListData(
     @Json(name = "modhash")
-    val modhash: String? = null,
+    val modhash: String?,
     @Json(name = "children")
-    val posts: List<Post>? = null,
+    val posts: List<Post>?,
     @Json(name = "after")
-    val after: String? = null,
+    val after: String?,
     @Json(name = "before")
-    val before: Any? = null
+    val before: Any?
 )

@@ -13,6 +13,7 @@ import com.arnava.ur.ui.viewmodel.PostViewModel
 import com.arnava.ur.utils.auth.TokenStorage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class FeedFragment : Fragment() {
@@ -37,14 +38,19 @@ class FeedFragment : Fragment() {
             while (true) {
                 if (TokenStorage.accessToken == null) delay(500)
                 else {
-                    viewModel.loadTopList()
-                    println("DONE")
+                    viewModel.loadTopPosts()
                     break
                 }
             }
         }
+        binding.newPostsBtn.setOnClickListener {
+            viewModel.loadNewPosts()
+        }
+        binding.topPostsBtn.setOnClickListener {
+            viewModel.loadTopPosts()
+        }
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.pagedSubreddits.collect { pagingDataFlow ->
+            viewModel.pagedPosts.collectLatest { pagingDataFlow ->
                 pagingDataFlow?.collect {
                     pagedSubredditListAdapter.submitData(it)
                 }

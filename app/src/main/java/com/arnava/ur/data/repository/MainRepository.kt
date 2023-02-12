@@ -6,5 +6,6 @@ import javax.inject.Inject
 class MainRepository @Inject constructor(
     private val redditMainApi: RedditMainApi
 ) {
-    suspend fun getTopSubreddits(page:String) = redditMainApi.getTopPosts(page)
+    suspend fun getTopPosts(page:String) = redditMainApi.getTopPosts(page)
+    suspend fun getNewPosts(page:String) = redditMainApi.getNewPosts(page)
 }

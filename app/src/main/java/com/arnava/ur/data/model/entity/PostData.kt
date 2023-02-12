@@ -8,91 +8,91 @@ data class PostData(
         @Json(name = "banner_img")
         val bannerImg: String?,
         @Json(name = "user_sr_theme_enabled")
-        val userSrThemeEnabled: Boolean? = null,
+        val userSrThemeEnabled: Boolean?,
         @Json(name = "submit_text_html")
-        val submitTextHtml: String? = null,
+        val submitTextHtml: String?,
         @Json(name = "user_is_banned")
-        val userIsBanned: Any? = null,
+        val userIsBanned: Any?,
         @Json(name = "wiki_enabled")
-        val wikiEnabled: Boolean? = null,
+        val wikiEnabled: Boolean?,
         @Json(name = "show_media")
-        val showMedia: Boolean? = null,
+        val showMedia: Boolean?,
         @Json(name = "id")
-        val id: String? = null,
+        val id: String?,
         @Json(name = "selftext")
-        val selftext: String? = null,
+        val selftext: String?,
         @Json(name = "display_name")
-        val displayName: String? = null,
+        val displayName: String?,
         @Json(name = "header_img")
-        val headerImg: String? = null,
+        val headerImg: String?,
         @Json(name = "description_html")
-        val descriptionHtml: String? = null,
+        val descriptionHtml: String?,
         @Json(name = "title")
-        val title: String? = null,
+        val title: String?,
         @Json(name = "collapse_deleted_comments")
-        val collapseDeletedComments: Boolean? = null,
+        val collapseDeletedComments: Boolean?,
         @Json(name = "over18")
-        val over18: Boolean? = null,
+        val over18: Boolean?,
         @Json(name = "public_description_html")
-        val publicDescriptionHtml: String? = null,
+        val publicDescriptionHtml: String?,
         @Json(name = "spoilers_enabled")
-        val spoilersEnabled: Boolean? = null,
+        val spoilersEnabled: Boolean?,
         @Json(name = "icon_size")
-        val iconSize: List<Int>? = null,
+        val iconSize: List<Int>?,
         @Json(name = "suggested_comment_sort")
-        val suggestedCommentSort: Any? = null,
+        val suggestedCommentSort: Any?,
         @Json(name = "icon_img")
-        val iconImg: String? = null,
+        val iconImg: String?,
         @Json(name = "header_title")
-        val headerTitle: String? = null,
+        val headerTitle: String?,
         @Json(name = "description")
-        val description: String? = null,
+        val description: String?,
         @Json(name = "user_is_muted")
-        val userIsMuted: Any? = null,
+        val userIsMuted: Any?,
         @Json(name = "submit_link_label")
-        val submitLinkLabel: Any? = null,
+        val submitLinkLabel: Any?,
         @Json(name = "accounts_active")
-        val accountsActive: Any? = null,
+        val accountsActive: Any?,
         @Json(name = "public_traffic")
-        val publicTraffic: Boolean? = null,
+        val publicTraffic: Boolean?,
         @Json(name = "header_size")
-        val headerSize: List<Int>? = null,
+        val headerSize: List<Int>?,
         @Json(name = "subscribers")
-        val subscribers: Int? = null,
+        val subscribers: Int?,
         @Json(name = "submit_text_label")
-        val submitTextLabel: Any? = null,
+        val submitTextLabel: Any?,
         @Json(name = "lang")
-        val lang: String? = null,
+        val lang: String?,
         @Json(name = "user_is_moderator")
-        val userIsModerator: Any? = null,
+        val userIsModerator: Any?,
         @Json(name = "key_color")
-        val keyColor: String? = null,
+        val keyColor: String?,
         @Json(name = "name")
-        val name: String? = null,
+        val name: String?,
         @Json(name = "created")
-        val created: Double? = null,
+        val created: Double?,
         @Json(name = "url")
-        val url: String? = null,
+        val url: String?,
         @Json(name = "quarantine")
-        val quarantine: Boolean? = null,
+        val quarantine: Boolean?,
         @Json(name = "hide_ads")
-        val hideAds: Boolean? = null,
+        val hideAds: Boolean?,
         @Json(name = "created_utc")
-        val createdUtc: Double? = null,
+        val createdUtc: Double?,
         @Json(name = "banner_size")
-        val bannerSize: Any? = null,
+        val bannerSize: Any?,
         @Json(name = "user_is_contributor")
-        val userIsContributor: Any? = null,
+        val userIsContributor: Any?,
         @Json(name = "public_description")
-        val publicDescription: String? = null,
+        val publicDescription: String?,
         @Json(name = "show_media_preview")
-        val showMediaPreview: Boolean? = null,
+        val showMediaPreview: Boolean?,
         @Json(name = "comment_score_hide_mins")
-        val commentScoreHideMins: Int? = null,
+        val commentScoreHideMins: Int?,
         @Json(name = "subreddit_type")
-        val subredditType: String? = null,
+        val subredditType: String?,
         @Json(name = "submission_type")
-        val submissionType: String? = null,
+        val submissionType: String?,
         @Json(name = "user_is_subscriber")
-        val userIsSubscriber: Any? = null
+        val userIsSubscriber: Any?
 )

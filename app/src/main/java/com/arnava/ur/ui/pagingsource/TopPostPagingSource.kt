@@ -6,7 +6,7 @@ import com.arnava.ur.data.model.entity.Post
 import com.arnava.ur.data.repository.MainRepository
 import javax.inject.Inject
 
-class PostPagingSource @Inject constructor(
+class TopPostPagingSource @Inject constructor(
     private val repository: MainRepository,
 ) :
     PagingSource<String, Post>() {
@@ -15,7 +15,7 @@ class PostPagingSource @Inject constructor(
     override suspend fun load(params: LoadParams<String>): LoadResult<String, Post> {
         val page = params.key ?: FIRST_PAGE
         return kotlin.runCatching {
-            repository.getTopSubreddits(page)
+            repository.getTopPosts(page)
         }.fold(
             onSuccess = {
                 val subreddits = it.listData?.posts

@@ -26,7 +26,7 @@ class PagedSubredditListAdapter(
         val postData = getItem(position)?.data
         itemExpandedMap.putIfAbsent(position, false)
         with(holder.binding) {
-            subredditName.text = postData?.title
+            postName.text = postData?.title
             Glide
                 .with(holder.itemView)
                 .load(postData?.url)
@@ -37,7 +37,7 @@ class PagedSubredditListAdapter(
                 .into(bannerView)
 
             bannerView.isVisible = itemExpandedMap[position] ?: false
-            subredditName.setOnClickListener {
+            root.setOnClickListener {
                 if (postData?.url?.isImage() == true) {
                     bannerView.isVisible = !bannerView.isVisible
                     itemExpandedMap[position] = !itemExpandedMap[position]!!
@@ -47,7 +47,7 @@ class PagedSubredditListAdapter(
 
     }
 
-    fun String.isImage(): Boolean {
+    private fun String.isImage(): Boolean {
         val subStr = this.substring(this.length-3, this.length)
         return (subStr == "jpg" || subStr == "png")
     }
