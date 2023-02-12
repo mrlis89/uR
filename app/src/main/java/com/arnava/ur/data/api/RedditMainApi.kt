@@ -14,4 +14,10 @@ interface RedditMainApi {
     suspend fun getNewPosts(
         @Query("after") page: String = ""
     ): Listing
+
+    @GET("search")
+    suspend fun searchPosts(
+        @Query("after") page: String = "",
+        @Query("q") searchRequest: String = "",
+    ): Listing
 }

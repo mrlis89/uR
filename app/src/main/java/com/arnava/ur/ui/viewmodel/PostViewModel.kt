@@ -9,6 +9,7 @@ import androidx.paging.cachedIn
 import com.arnava.ur.data.model.entity.Post
 import com.arnava.ur.data.repository.MainRepository
 import com.arnava.ur.ui.pagingsource.NewPostPagingSource
+import com.arnava.ur.ui.pagingsource.SearchPostPagingSource
 import com.arnava.ur.ui.pagingsource.TopPostPagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -28,10 +29,18 @@ class PostViewModel@Inject constructor(
             pagingSourceFactory = {TopPostPagingSource(repository)}
         ).flow.cachedIn(viewModelScope)
     }
+
     fun loadNewPosts(){
         _pagedPosts.value = Pager(
             config = PagingConfig(pageSize = 25,enablePlaceholders = false),
             pagingSourceFactory = {NewPostPagingSource(repository)}
+        ).flow.cachedIn(viewModelScope)
+    }
+
+    fun searchPosts(request :String){
+        _pagedPosts.value = Pager(
+            config = PagingConfig(pageSize = 25,enablePlaceholders = false),
+            pagingSourceFactory = {SearchPostPagingSource(repository, request)}
         ).flow.cachedIn(viewModelScope)
     }
 }

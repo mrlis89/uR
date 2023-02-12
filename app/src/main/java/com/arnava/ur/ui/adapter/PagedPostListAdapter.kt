@@ -35,11 +35,13 @@ class PagedSubredditListAdapter(
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                 )
                 .into(bannerView)
-
+            authorName.text = postData?.author
             bannerView.isVisible = itemExpandedMap[position] ?: false
+            authorName.isVisible = itemExpandedMap[position] ?: false
             root.setOnClickListener {
                 if (postData?.url?.isImage() == true) {
                     bannerView.isVisible = !bannerView.isVisible
+                    authorName.isVisible = !authorName.isVisible
                     itemExpandedMap[position] = !itemExpandedMap[position]!!
                 }
             }

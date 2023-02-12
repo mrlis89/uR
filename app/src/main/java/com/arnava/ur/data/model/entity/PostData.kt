@@ -29,6 +29,8 @@ data class PostData(
         val descriptionHtml: String?,
         @Json(name = "title")
         val title: String?,
+        @Json(name = "author")
+        val author: String?,
         @Json(name = "collapse_deleted_comments")
         val collapseDeletedComments: Boolean?,
         @Json(name = "over18")
