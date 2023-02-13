@@ -24,11 +24,21 @@
 
             <TextView
                 android:id="@+id/post_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="10"
                 android:padding="15dp"
                 android:text="text"
                 android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/goto_details_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/arrow_forward" />
 
         </LinearLayout>
 

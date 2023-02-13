@@ -18,3 +18,5 @@ const val CHANNEL_NAME = "Downloading photo"
 const val CHANNEL_DESC = "Downloading complete"
 const val CHANNEL_ID = "channel_100"
 const val NOTIFICATION_ID = 100
+
+const val THING_DATA = "thingData"

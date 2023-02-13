@@ -8,7 +8,7 @@ data class ListData(
     @Json(name = "modhash")
     val modhash: String?,
     @Json(name = "children")
-    val posts: List<Post>?,
+    val things: List<Thing>?,
     @Json(name = "after")
     val after: String?,
     @Json(name = "before")

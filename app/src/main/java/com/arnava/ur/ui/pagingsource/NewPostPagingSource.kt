@@ -2,23 +2,22 @@ package com.arnava.ur.ui.pagingsource
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.arnava.ur.data.model.entity.Post
+import com.arnava.ur.data.model.entity.Thing
 import com.arnava.ur.data.repository.MainRepository
-import javax.inject.Inject
 
 class NewPostPagingSource (
     private val repository: MainRepository,
 ) :
-    PagingSource<String, Post>() {
-    override fun getRefreshKey(state: PagingState<String, Post>): String = FIRST_PAGE
+    PagingSource<String, Thing>() {
+    override fun getRefreshKey(state: PagingState<String, Thing>): String = FIRST_PAGE
 
-    override suspend fun load(params: LoadParams<String>): LoadResult<String, Post> {
+    override suspend fun load(params: LoadParams<String>): LoadResult<String, Thing> {
         val page = params.key ?: FIRST_PAGE
         return kotlin.runCatching {
             repository.getNewPosts(page)
         }.fold(
             onSuccess = {
-                val subreddits = it.listData?.posts
+                val subreddits = it.listData?.things
                 LoadResult.Page(
                     data = subreddits ?: emptyList(),
                     prevKey = null,

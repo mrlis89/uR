@@ -20,4 +20,10 @@ interface RedditMainApi {
         @Query("after") page: String = "",
         @Query("q") searchRequest: String = "",
     ): Listing
+
+    @GET("comments/{postId}")
+    suspend fun getPostsComments(
+        @Path("postId") postId:String,
+        @Query("limit") limit:Int = 50
+    ): Listing
 }

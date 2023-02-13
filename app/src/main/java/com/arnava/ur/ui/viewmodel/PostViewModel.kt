@@ -6,7 +6,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.arnava.ur.data.model.entity.Post
+import com.arnava.ur.data.model.entity.Thing
 import com.arnava.ur.data.repository.MainRepository
 import com.arnava.ur.ui.pagingsource.NewPostPagingSource
 import com.arnava.ur.ui.pagingsource.SearchPostPagingSource
@@ -21,7 +21,7 @@ import javax.inject.Inject
 class PostViewModel@Inject constructor(
     private val repository: MainRepository,
 ): ViewModel(){
-    private val _pagedPosts= MutableStateFlow<Flow<PagingData<Post>>?>(null)
+    private val _pagedPosts= MutableStateFlow<Flow<PagingData<Thing>>?>(null)
     val pagedPosts = _pagedPosts.asStateFlow()
     fun loadTopPosts(){
         _pagedPosts.value = Pager(

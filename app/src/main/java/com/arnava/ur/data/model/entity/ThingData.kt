@@ -1,18 +1,19 @@
 package com.arnava.ur.data.model.entity
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @JsonClass(generateAdapter = true)
-data class PostData(
+data class ThingData(
         @Json(name = "banner_img")
         val bannerImg: String?,
         @Json(name = "user_sr_theme_enabled")
         val userSrThemeEnabled: Boolean?,
         @Json(name = "submit_text_html")
         val submitTextHtml: String?,
-        @Json(name = "user_is_banned")
-        val userIsBanned: Any?,
         @Json(name = "wiki_enabled")
         val wikiEnabled: Boolean?,
         @Json(name = "show_media")
@@ -41,32 +42,20 @@ data class PostData(
         val spoilersEnabled: Boolean?,
         @Json(name = "icon_size")
         val iconSize: List<Int>?,
-        @Json(name = "suggested_comment_sort")
-        val suggestedCommentSort: Any?,
         @Json(name = "icon_img")
         val iconImg: String?,
         @Json(name = "header_title")
         val headerTitle: String?,
         @Json(name = "description")
         val description: String?,
-        @Json(name = "user_is_muted")
-        val userIsMuted: Any?,
-        @Json(name = "submit_link_label")
-        val submitLinkLabel: Any?,
-        @Json(name = "accounts_active")
-        val accountsActive: Any?,
         @Json(name = "public_traffic")
         val publicTraffic: Boolean?,
         @Json(name = "header_size")
         val headerSize: List<Int>?,
         @Json(name = "subscribers")
         val subscribers: Int?,
-        @Json(name = "submit_text_label")
-        val submitTextLabel: Any?,
         @Json(name = "lang")
         val lang: String?,
-        @Json(name = "user_is_moderator")
-        val userIsModerator: Any?,
         @Json(name = "key_color")
         val keyColor: String?,
         @Json(name = "name")
@@ -81,10 +70,6 @@ data class PostData(
         val hideAds: Boolean?,
         @Json(name = "created_utc")
         val createdUtc: Double?,
-        @Json(name = "banner_size")
-        val bannerSize: Any?,
-        @Json(name = "user_is_contributor")
-        val userIsContributor: Any?,
         @Json(name = "public_description")
         val publicDescription: String?,
         @Json(name = "show_media_preview")
@@ -96,5 +81,5 @@ data class PostData(
         @Json(name = "submission_type")
         val submissionType: String?,
         @Json(name = "user_is_subscriber")
-        val userIsSubscriber: Any?
-)
+        val userIsSubscriber: Boolean?
+) : Parcelable

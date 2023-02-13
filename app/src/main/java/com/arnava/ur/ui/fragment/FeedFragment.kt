@@ -1,11 +1,9 @@
 package com.arnava.ur.ui.fragment
 
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
@@ -13,10 +11,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.arnava.ur.R
+import com.arnava.ur.data.model.entity.ThingData
 import com.arnava.ur.databinding.FragmentFeedBinding
-import com.arnava.ur.ui.adapter.PagedSubredditListAdapter
+import com.arnava.ur.ui.adapter.PagedPostListAdapter
 import com.arnava.ur.ui.viewmodel.PostViewModel
 import com.arnava.ur.utils.auth.TokenStorage
+import com.arnava.ur.utils.constants.THING_DATA
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
@@ -27,7 +27,7 @@ class FeedFragment : Fragment() {
     private var _binding: FragmentFeedBinding? = null
     private val binding get() = _binding!!
     private val viewModel: PostViewModel by viewModels()
-    private val pagedSubredditListAdapter = PagedSubredditListAdapter {}
+    private val pagedPostListAdapter = PagedPostListAdapter { onPostClick(it) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +39,7 @@ class FeedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.recyclerView.adapter = pagedSubredditListAdapter
+        binding.recyclerView.adapter = pagedPostListAdapter
         binding.topPostsBtn.isSelected = true
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             while (true) {
@@ -61,7 +61,7 @@ class FeedFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.pagedPosts.collectLatest { pagingDataFlow ->
                 pagingDataFlow?.collect {
-                    pagedSubredditListAdapter.submitData(it)
+                    pagedPostListAdapter.submitData(it)
                 }
             }
         }
@@ -71,12 +71,23 @@ class FeedFragment : Fragment() {
             }
 
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if (!query.isNullOrBlank()){
+                if (!query.isNullOrBlank()) {
                     viewModel.searchPosts(query)
                 }
                 return false
             }
         })
+    }
+
+    private fun onPostClick(item: ThingData) {
+        val bundle = Bundle().apply {
+            putParcelable(THING_DATA, item)
+        }
+        findNavController().navigate(R.id.action_navigation_feed_to_postDetailsFragment, bundle)
+        parentFragmentManager.commit {
+            replace(R.id.nav_host_fragment, PostDetailsFragment::class.java, bundle)
+            addToBackStack(FeedFragment::class.java.name)
+        }
     }
 
     private fun changeBtnState() {

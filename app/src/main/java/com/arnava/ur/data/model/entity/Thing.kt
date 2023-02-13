@@ -4,9 +4,9 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class Post (
+data class Thing (
     @Json(name = "kind")
     val kind: String?,
     @Json(name = "data")
-    val data: PostData?
+    val data: ThingData?
 )
