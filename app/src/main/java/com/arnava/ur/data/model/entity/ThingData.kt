@@ -22,6 +22,10 @@ data class ThingData(
         val id: String?,
         @Json(name = "selftext")
         val selftext: String?,
+        @Json(name = "body")
+        val body: String?,
+        @Json(name = "body_html")
+        val bodyHtml: String?,
         @Json(name = "display_name")
         val displayName: String?,
         @Json(name = "header_img")

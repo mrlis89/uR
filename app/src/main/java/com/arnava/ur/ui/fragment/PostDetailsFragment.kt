@@ -1,15 +1,16 @@
 package com.arnava.ur.ui.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.arnava.ur.data.model.entity.ThingData
-import com.arnava.ur.databinding.FragmentFavoriteBinding
 import com.arnava.ur.databinding.FragmentPostDetailsBinding
+import com.arnava.ur.ui.adapter.CommentListAdapter
 import com.arnava.ur.ui.viewmodel.CommentsViewModel
 import com.arnava.ur.utils.constants.THING_DATA
 import com.bumptech.glide.Glide
@@ -23,7 +24,8 @@ class PostDetailsFragment : Fragment() {
     private var _binding: FragmentPostDetailsBinding? = null
     private val binding get() = _binding!!
     private lateinit var postData: ThingData
-    private val commentsViewModel: CommentsViewModel by viewModels()
+    private val viewModel: CommentsViewModel by viewModels()
+    private val commentListAdapter = CommentListAdapter {}
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,6 +54,13 @@ class PostDetailsFragment : Fragment() {
                 )
                 .into(bannerView)
             authorName.text = postData.author
+        }
+        binding.recyclerView.adapter = commentListAdapter
+        viewModel.loadFoundCollections(postData.id.toString())
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.commentsFlow.collect { comments ->
+                comments?.let { commentListAdapter.setData(it) }
+            }
         }
     }
 

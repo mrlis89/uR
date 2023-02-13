@@ -1,6 +1,7 @@
 package com.arnava.ur.data.repository
 
 import com.arnava.ur.data.api.RedditMainApi
+import com.arnava.ur.data.model.entity.Listing
 import javax.inject.Inject
 
 class MainRepository @Inject constructor(
@@ -9,5 +10,6 @@ class MainRepository @Inject constructor(
     suspend fun getTopPosts(page:String) = redditMainApi.getTopPosts(page)
     suspend fun getNewPosts(page:String) = redditMainApi.getNewPosts(page)
     suspend fun searchPosts(page:String, request :String) = redditMainApi.searchPosts(page, request)
-    suspend fun getPostsComments(postId:String) = redditMainApi.getPostsComments(postId)
+    suspend fun getPostsComments(postId:String): List<Listing>
+    = redditMainApi.getPostsComments(postId)
 }

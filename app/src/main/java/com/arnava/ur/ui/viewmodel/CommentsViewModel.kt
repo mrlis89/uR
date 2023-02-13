@@ -2,6 +2,7 @@ package com.arnava.ur.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.arnava.ur.data.model.entity.Listing
 import com.arnava.ur.data.model.entity.Thing
 import com.arnava.ur.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,12 +15,12 @@ import javax.inject.Inject
 class CommentsViewModel @Inject constructor(private val repository: MainRepository) :
     ViewModel() {
 
-    private val _pagingCollections = MutableStateFlow<List<Thing>?>(emptyList())
-    val pagingCollections = _pagingCollections.asStateFlow()
+    private val _commentsFlow = MutableStateFlow<List<Listing>?>(emptyList())
+    val commentsFlow = _commentsFlow.asStateFlow()
 
     fun loadFoundCollections(postId: String) {
         viewModelScope.launch {
-            _pagingCollections.value = repository.getPostsComments(postId).listData?.things
+            _commentsFlow.value = repository.getPostsComments(postId)
         }
 
     }
