@@ -12,6 +12,7 @@ import com.arnava.ur.data.model.entity.ThingData
 import com.arnava.ur.databinding.FragmentPostDetailsBinding
 import com.arnava.ur.ui.adapter.CommentListAdapter
 import com.arnava.ur.ui.viewmodel.CommentsViewModel
+import com.arnava.ur.utils.common.StringUtils.isImage
 import com.arnava.ur.utils.constants.THING_DATA
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -45,14 +46,17 @@ class PostDetailsFragment : Fragment() {
         with(binding.postItem) {
             gotoDetailsBtn.isVisible = false
             postName.text = postData.title
-            Glide
-                .with(this@PostDetailsFragment)
-                .load(postData.url)
-                .apply(
-                    RequestOptions()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                )
-                .into(bannerView)
+            val imageSrc = postData.url ?: ""
+            if (imageSrc.isImage()) {
+                Glide
+                    .with(this@PostDetailsFragment)
+                    .load(postData.url)
+                    .apply(
+                        RequestOptions()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    )
+                    .into(bannerView)
+            } else bannerView.isVisible = false
             authorName.text = postData.author
         }
         binding.recyclerView.adapter = commentListAdapter

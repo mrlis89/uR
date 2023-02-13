@@ -12,8 +12,8 @@ class CommentListAdapter(
     private val onItemClick: (ThingData) -> Unit,
 ) : RecyclerView.Adapter<CommentListViewHolder>() {
 
-    private var data: List<Listing?> = emptyList()
-    fun setData(data: List<Listing?>) {
+    private var data: List<Thing?> = emptyList()
+    fun setData(data: List<Thing?>) {
         this.data = data
         notifyDataSetChanged()
     }
@@ -24,14 +24,14 @@ class CommentListAdapter(
     }
 
     override fun onBindViewHolder(holder: CommentListViewHolder, position: Int) {
-        val postData = data[1]?.listData?.things!![position].data // 0 element is parent Post
+        val commentData = data[position]?.data
         with(holder.binding) {
-            commentText.text = postData?.body
-            commentAuthor.text = postData?.author
+            commentText.text = commentData?.body
+            commentAuthor.text = commentData?.author
         }
     }
 
-    override fun getItemCount() = if (data.isEmpty()) 0 else data[1]?.listData?.things?.size!! - 1
+    override fun getItemCount() = data.size - 1 
 }
 
 

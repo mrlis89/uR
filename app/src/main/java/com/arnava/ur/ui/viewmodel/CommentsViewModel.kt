@@ -15,7 +15,7 @@ import javax.inject.Inject
 class CommentsViewModel @Inject constructor(private val repository: MainRepository) :
     ViewModel() {
 
-    private val _commentsFlow = MutableStateFlow<List<Listing>?>(emptyList())
+    private val _commentsFlow = MutableStateFlow<List<Thing>?>(emptyList())
     val commentsFlow = _commentsFlow.asStateFlow()
 
     fun loadFoundCollections(postId: String) {

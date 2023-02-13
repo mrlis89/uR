@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.arnava.ur.data.model.entity.Thing
 import com.arnava.ur.data.model.entity.ThingData
 import com.arnava.ur.databinding.PostLayoutBinding
+import com.arnava.ur.utils.common.StringUtils.isImage
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -53,10 +54,6 @@ class PagedPostListAdapter(
 
     }
 
-    private fun String.isImage(): Boolean {
-        val subStr = this.substring(this.length-3, this.length)
-        return (subStr == "jpg" || subStr == "png")
-    }
 }
 
 
