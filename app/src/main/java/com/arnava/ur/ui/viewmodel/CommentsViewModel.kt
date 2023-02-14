@@ -2,8 +2,8 @@ package com.arnava.ur.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.arnava.ur.data.model.entity.Listing
 import com.arnava.ur.data.model.entity.Thing
+import com.arnava.ur.data.model.entity.Test
 import com.arnava.ur.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,6 +21,7 @@ class CommentsViewModel @Inject constructor(private val repository: MainReposito
     fun loadFoundCollections(postId: String) {
         viewModelScope.launch {
             _commentsFlow.value = repository.getPostsComments(postId)
+            Test(_commentsFlow.value)
         }
 
     }

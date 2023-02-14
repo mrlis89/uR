@@ -1,8 +1,11 @@
 package com.arnava.ur.data.model.entity
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @JsonClass(generateAdapter = true)
 data class ListData(
     @Json(name = "modhash")
@@ -12,5 +15,5 @@ data class ListData(
     @Json(name = "after")
     val after: String?,
     @Json(name = "before")
-    val before: Any?
-)
+    val before: String?
+) : Parcelable

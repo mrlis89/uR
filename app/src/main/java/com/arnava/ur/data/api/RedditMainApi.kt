@@ -1,7 +1,6 @@
 package com.arnava.ur.data.api
 
 import com.arnava.ur.data.model.entity.Listing
-import retrofit2.Response
 import retrofit2.http.*
 
 interface RedditMainApi {
@@ -26,5 +25,5 @@ interface RedditMainApi {
     suspend fun getPostsComments(
         @Path("postId") postId:String,
         @Query("limit") limit:Int = 50
-    ): List<Listing>
+    ): String
 }

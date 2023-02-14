@@ -36,6 +36,8 @@ data class ThingData(
         val title: String?,
         @Json(name = "author")
         val author: String?,
+        @Json(name = "replies")
+        val replies: Listing?,
         @Json(name = "collapse_deleted_comments")
         val collapseDeletedComments: Boolean?,
         @Json(name = "over18")
@@ -85,5 +87,5 @@ data class ThingData(
         @Json(name = "submission_type")
         val submissionType: String?,
         @Json(name = "user_is_subscriber")
-        val userIsSubscriber: Boolean?
+        val userIsSubscriber: Boolean?,
 ) : Parcelable

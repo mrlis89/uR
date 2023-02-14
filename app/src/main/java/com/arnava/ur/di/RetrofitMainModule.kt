@@ -14,6 +14,7 @@ import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -53,6 +54,7 @@ object RetrofitMainModule {
     @Singleton
     fun providesRetrofit(@MainModule okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
+            .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(MoshiConverterFactory.create())
             .baseUrl("https://oauth.reddit.com/")
             .client(okHttpClient)

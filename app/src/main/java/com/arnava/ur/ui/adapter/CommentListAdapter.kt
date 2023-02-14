@@ -2,6 +2,7 @@ package com.arnava.ur.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.marginStart
 import androidx.recyclerview.widget.RecyclerView
 import com.arnava.ur.data.model.entity.Listing
 import com.arnava.ur.data.model.entity.Thing
@@ -25,9 +26,11 @@ class CommentListAdapter(
 
     override fun onBindViewHolder(holder: CommentListViewHolder, position: Int) {
         val commentData = data[position]?.data
+        val nestingLevel = data[position]?.nestingLevel
         with(holder.binding) {
             commentText.text = commentData?.body
             commentAuthor.text = commentData?.author
+            rootLayout.setPadding(nestingLevel!! * 30,0,0,0)
         }
     }
 
