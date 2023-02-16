@@ -26,7 +26,11 @@ class PostDetailsFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var postData: ThingData
     private val viewModel: CommentsViewModel by viewModels()
-    private val commentListAdapter = CommentListAdapter {}
+    private val commentListAdapter = CommentListAdapter(
+        { upVote(it) },
+        { downVote(it) },
+        { resetVote(it) }
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +48,7 @@ class PostDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding.postItem) {
+            subredditBtn.text = "r/${postData?.subreddit}"
             gotoDetailsBtn.isVisible = false
             postName.text = postData.title
             val imageSrc = postData.url ?: ""
@@ -60,12 +65,24 @@ class PostDetailsFragment : Fragment() {
             authorName.text = postData.author
         }
         binding.recyclerView.adapter = commentListAdapter
-        viewModel.loadFoundCollections(postData.id.toString())
+        viewModel.loadPostsComments(postData.id.toString())
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.commentsFlow.collect { comments ->
                 comments?.let { commentListAdapter.setData(it) }
             }
         }
+    }
+
+    private fun upVote(commentId: String) {
+        viewModel.upVote(commentId)
+    }
+
+    private fun downVote(commentId: String) {
+        viewModel.downVote(commentId)
+    }
+
+    private fun resetVote(commentId: String) {
+        viewModel.resetVote(commentId)
     }
 
     override fun onDestroyView() {

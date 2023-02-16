@@ -15,6 +15,9 @@ class MainRepository @Inject constructor(
     suspend fun getNewPosts(page: String) = redditMainApi.getNewPosts(page)
     suspend fun searchPosts(page: String, request: String) =
         redditMainApi.searchPosts(page, request)
+    suspend fun upVote(id: String) = redditMainApi.vote(id, 1)
+    suspend fun downVote(id: String) = redditMainApi.vote(id, -1)
+    suspend fun resetVote(id: String) = redditMainApi.vote(id, 0)
 
     suspend fun getPostsComments(postId: String): List<Thing> {
         val redditResp = redditMainApi.getPostsComments(postId)

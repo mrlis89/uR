@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:padding="10dp">
 
@@ -13,23 +14,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/subreddit_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textStyle="bold"
+            tools:text="r/subreddit"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="16sp" />
+
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="386dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:paddingStart="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/subreddit_btn">
 
             <TextView
                 android:id="@+id/post_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
-                android:padding="15dp"
+                android:padding="5dp"
                 android:text="text"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <ImageView
                 android:id="@+id/goto_details_btn"
@@ -49,7 +62,7 @@
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
             android:visibility="visible"
-            android:padding="10dp"
+            android:paddingHorizontal="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
@@ -58,11 +71,35 @@
             android:id="@+id/author_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="15dp"
-            android:text="author"
+            android:padding="10dp"
+            tools:text="author"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/banner_view"
             app:layout_constraintStart_toStartOf="parent"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/follow_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textColor="#70000000"
+            android:textStyle="bold"
+            android:text="@string/follow"
+            app:layout_constraintTop_toBottomOf="@id/banner_view"
+            app:layout_constraintStart_toEndOf="@id/author_name"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/save_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textColor="#70000000"
+            android:textStyle="bold"
+            android:text="@string/save"
+            app:layout_constraintTop_toBottomOf="@id/banner_view"
+            app:layout_constraintEnd_toEndOf="parent"
             android:textSize="14sp" />
 
 

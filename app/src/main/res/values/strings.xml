@@ -21,4 +21,6 @@
     <string name="humblr_text">Найди единомышленников с Humblr</string>
     <string name="skip_text">Пропустить</string>
     <string name="complete_text">Готово</string>
+    <string name="follow">Подписаться</string>
+    <string name="save">Сохранить</string>
 </resources>

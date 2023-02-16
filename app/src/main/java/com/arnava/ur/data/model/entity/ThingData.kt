@@ -10,8 +10,16 @@ import kotlinx.parcelize.Parcelize
 data class ThingData(
         @Json(name = "banner_img")
         val bannerImg: String?,
+        @Json(name = "score")
+        val score: Int?,
+        @Json(name = "subreddit")
+        val subreddit: String?,
+        @Json(name = "subreddit_id")
+        val subredditId: String?,
         @Json(name = "user_sr_theme_enabled")
         val userSrThemeEnabled: Boolean?,
+        @Json(name = "is_friend")
+        var isFriend: Boolean? = false,
         @Json(name = "submit_text_html")
         val submitTextHtml: String?,
         @Json(name = "wiki_enabled")
@@ -65,17 +73,21 @@ data class ThingData(
         @Json(name = "key_color")
         val keyColor: String?,
         @Json(name = "name")
-        val name: String?,
+        val fullNameID: String?,
         @Json(name = "created")
-        val created: Double?,
+        val created: Long?,
         @Json(name = "url")
         val url: String?,
         @Json(name = "quarantine")
         val quarantine: Boolean?,
         @Json(name = "hide_ads")
         val hideAds: Boolean?,
+        @Json(name = "saved")
+        var saved: Boolean? = false,
+        @Json(name = "likes")
+        var liked: Boolean?,
         @Json(name = "created_utc")
-        val createdUtc: Double?,
+        val createdUtc: Long?,
         @Json(name = "public_description")
         val publicDescription: String?,
         @Json(name = "show_media_preview")

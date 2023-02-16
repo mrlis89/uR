@@ -18,11 +18,27 @@ class CommentsViewModel @Inject constructor(private val repository: MainReposito
     private val _commentsFlow = MutableStateFlow<List<Thing>?>(emptyList())
     val commentsFlow = _commentsFlow.asStateFlow()
 
-    fun loadFoundCollections(postId: String) {
+    fun loadPostsComments(postId: String) {
         viewModelScope.launch {
             _commentsFlow.value = repository.getPostsComments(postId)
             Test(_commentsFlow.value)
         }
 
+    }
+
+    fun upVote(commentId: String) {
+        viewModelScope.launch {
+            repository.upVote(commentId)
+        }
+    }
+    fun downVote(commentId: String) {
+        viewModelScope.launch {
+            repository.downVote(commentId)
+        }
+    }
+    fun resetVote(commentId: String) {
+        viewModelScope.launch {
+            repository.resetVote(commentId)
+        }
     }
 }
