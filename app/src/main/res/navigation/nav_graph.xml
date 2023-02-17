@@ -16,7 +16,11 @@
     <fragment
         android:id="@+id/navigation_favorite"
         android:name="com.arnava.ur.ui.fragment.FavoriteFragment"
-        android:label="FavoriteFragment" />
+        android:label="FavoriteFragment" >
+        <action
+            android:id="@+id/action_navigation_favorite_to_postDetailsFragment"
+            app:destination="@id/postDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.arnava.ur.ui.fragment.ProfileFragment"

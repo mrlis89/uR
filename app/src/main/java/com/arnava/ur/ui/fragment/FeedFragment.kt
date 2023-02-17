@@ -36,7 +36,7 @@ class FeedFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentFeedBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -92,6 +92,7 @@ class FeedFragment : Fragment() {
                 if (TokenStorage.accessToken == null) delay(500)
                 else {
                     viewModel.loadTopPosts()
+                    viewModel.putUserNameToStorage()
                     break
                 }
             }

@@ -38,6 +38,7 @@ class CommentListAdapter(
         val commentData = data[position]?.data
         val nestingLevel = data[position]?.nestingLevel
         with(holder.binding) {
+            changeSaveCommentButton(commentData)
             saveCommentBtn.setOnClickListener {
                 if (commentData?.saved == true) {
                     commentData.saved = false

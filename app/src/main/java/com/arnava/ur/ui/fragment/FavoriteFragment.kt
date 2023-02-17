@@ -15,6 +15,7 @@ import com.arnava.ur.databinding.FragmentFavoriteBinding
 import com.arnava.ur.ui.adapter.CommentListAdapter
 import com.arnava.ur.ui.adapter.PagedPostListAdapter
 import com.arnava.ur.ui.viewmodel.FavoriteViewModel
+import com.arnava.ur.utils.auth.UserInfoStorage
 import com.arnava.ur.utils.constants.THING_DATA
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -41,7 +42,7 @@ class FavoriteFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -50,7 +51,7 @@ class FavoriteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.savedPostsBtn.setOnClickListener {
             binding.recyclerView.adapter = pagedPostListAdapter
-            viewModel.loadSavedPosts("mr_lis89")
+            viewModel.loadSavedPosts(UserInfoStorage.userName.toString())
 
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 viewModel.savedPosts.collectLatest { pagingDataFlow ->
@@ -60,8 +61,16 @@ class FavoriteFragment : Fragment() {
                 }
             }
         }
+
         binding.savedCommentsBtn.setOnClickListener {
-            viewModel.loadSavedComments("mr_lis89")
+            binding.recyclerView.adapter = commentListAdapter
+            viewModel.loadSavedComments(UserInfoStorage.userName.toString())
+
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                viewModel.commentsFlow.collect { comments ->
+                    comments?.let { commentListAdapter.setData(it) }
+                }
+            }
         }
     }
 
@@ -89,10 +98,10 @@ class FavoriteFragment : Fragment() {
         val bundle = Bundle().apply {
             putParcelable(THING_DATA, item)
         }
-        findNavController().navigate(R.id.action_navigation_feed_to_postDetailsFragment, bundle)
+        findNavController().navigate(R.id.action_navigation_favorite_to_postDetailsFragment, bundle)
         parentFragmentManager.commit {
             replace(R.id.nav_host_fragment, PostDetailsFragment::class.java, bundle)
-            addToBackStack(FeedFragment::class.java.name)
+            addToBackStack(FavoriteFragment::class.java.name)
         }
     }
 

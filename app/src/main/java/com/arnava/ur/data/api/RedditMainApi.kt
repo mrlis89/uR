@@ -40,10 +40,10 @@ interface RedditMainApi {
 
     //Users
     @GET("api/v1/me")
-    suspend fun accountInfo(): AccountInfo
+    suspend fun getAccountInfo(): AccountInfo
 
     @GET("user/{username}/about")
-    suspend fun userInfo(
+    suspend fun getUserInfo(
         @Path("username") userName: String
     ): UserInfo
 

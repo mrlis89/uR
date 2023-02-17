@@ -54,5 +54,6 @@ class MainRepository @Inject constructor(
         return resp?.listData?.things
     }
 
+    suspend fun getAccountInfo() = redditMainApi.getAccountInfo()
 
 }

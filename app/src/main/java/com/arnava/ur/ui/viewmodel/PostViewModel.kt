@@ -7,6 +7,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.arnava.ur.data.model.entity.Thing
+import com.arnava.ur.data.repository.LocalRepository
 import com.arnava.ur.data.repository.MainRepository
 import com.arnava.ur.ui.pagingsource.NewPostPagingSource
 import com.arnava.ur.ui.pagingsource.SearchPostPagingSource
@@ -21,6 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PostViewModel @Inject constructor(
     private val repository: MainRepository,
+    private val localRepository: LocalRepository,
 ) : ViewModel() {
     var initialRun = true
     var currentList = CurrentList.TOP
@@ -56,6 +58,17 @@ class PostViewModel @Inject constructor(
     fun unsavePost(postId: String) {
         viewModelScope.launch {
             repository.unsaveThing(postId)
+        }
+    }
+
+    fun putUserNameToStorage() {
+        var userName = localRepository.getUserNameLocally()
+        if (userName != "") localRepository.saveUserName(userName)
+        else {
+            viewModelScope.launch {
+                val accountInfo = repository.getAccountInfo()
+                localRepository.saveUserName(accountInfo.name)
+            }
         }
     }
 
