@@ -14,6 +14,7 @@ class MainRepository @Inject constructor(
 ) {
     suspend fun getTopPosts(page: String) = redditMainApi.getTopPosts(page)
     suspend fun getNewPosts(page: String) = redditMainApi.getNewPosts(page)
+    suspend fun getSavedPosts(userName: String, page: String) = redditMainApi.getSavedPosts(userName, page)
     suspend fun searchPosts(page: String, request: String) =
         redditMainApi.searchPosts(page, request)
 

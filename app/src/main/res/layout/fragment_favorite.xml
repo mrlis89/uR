@@ -16,42 +16,30 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/new_posts_btn" />
+        app:layout_constraintTop_toBottomOf="@+id/saved_comments_btn" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/new_posts_btn"
+        android:id="@+id/saved_comments_btn"
         android:layout_width="140dp"
         android:layout_height="38dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="50dp"
-        android:layout_marginTop="12dp"
         android:background="@drawable/button_selector"
-        android:text="Новое"
+        android:text="Комментарии"
         android:textAlignment="center"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_view" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/top_posts_btn"
+        android:id="@+id/saved_posts_btn"
         android:layout_width="140dp"
         android:layout_height="38dp"
-        android:layout_marginTop="12dp"
         android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/button_selector"
-        android:text="Популярное"
+        android:text="Посты"
         android:textAllCaps="false"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_view" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/search_view"
-        android:layout_width="350dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/button_selector"
-        android:padding="8dp"
-        android:text="Сохраненные"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
