@@ -27,7 +27,11 @@ class FeedFragment : Fragment() {
     private var _binding: FragmentFeedBinding? = null
     private val binding get() = _binding!!
     private val viewModel: PostViewModel by viewModels()
-    private val pagedPostListAdapter = PagedPostListAdapter { onPostClick(it) }
+    private val pagedPostListAdapter = PagedPostListAdapter(
+        { onPostClick(it) },
+        { onSaveClick(it) },
+        { onUnsaveClick(it) }
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,23 +44,24 @@ class FeedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerView.adapter = pagedPostListAdapter
-        binding.topPostsBtn.isSelected = true
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            while (true) {
-                if (TokenStorage.accessToken == null) delay(500)
-                else {
-                    viewModel.loadTopPosts()
-                    break
-                }
-            }
+        changeBtnState()
+        if (viewModel.initialRun) {
+            loadInitialList()
+            viewModel.initialRun = false
         }
         binding.newPostsBtn.setOnClickListener {
-            viewModel.loadNewPosts()
-            if (!binding.newPostsBtn.isSelected) changeBtnState()
+            if (viewModel.currentList != PostViewModel.CurrentList.NEW) {
+                viewModel.loadNewPosts()
+                viewModel.currentList = PostViewModel.CurrentList.NEW
+                changeBtnState()
+            }
         }
         binding.topPostsBtn.setOnClickListener {
-            viewModel.loadTopPosts()
-            if (!binding.topPostsBtn.isSelected) changeBtnState()
+            if (viewModel.currentList != PostViewModel.CurrentList.TOP) {
+                viewModel.loadTopPosts()
+                viewModel.currentList = PostViewModel.CurrentList.TOP
+                changeBtnState()
+            }
         }
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.pagedPosts.collectLatest { pagingDataFlow ->
@@ -73,10 +78,24 @@ class FeedFragment : Fragment() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (!query.isNullOrBlank()) {
                     viewModel.searchPosts(query)
+                    viewModel.currentList = PostViewModel.CurrentList.FOUND
+                    changeBtnState()
                 }
                 return false
             }
         })
+    }
+
+    private fun loadInitialList() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            while (true) {
+                if (TokenStorage.accessToken == null) delay(500)
+                else {
+                    viewModel.loadTopPosts()
+                    break
+                }
+            }
+        }
     }
 
     private fun onPostClick(item: ThingData) {
@@ -90,9 +109,25 @@ class FeedFragment : Fragment() {
         }
     }
 
+    private fun onSaveClick(postId: String) = viewModel.savePost(postId)
+    private fun onUnsaveClick(postId: String) = viewModel.unsavePost(postId)
+
+
     private fun changeBtnState() {
-        binding.topPostsBtn.isSelected = !binding.topPostsBtn.isSelected
-        binding.newPostsBtn.isSelected = !binding.newPostsBtn.isSelected
+        when (viewModel.currentList) {
+            PostViewModel.CurrentList.TOP -> {
+                binding.topPostsBtn.isSelected = true
+                binding.newPostsBtn.isSelected = false
+            }
+            PostViewModel.CurrentList.NEW -> {
+                binding.newPostsBtn.isSelected = true
+                binding.topPostsBtn.isSelected = false
+            }
+            PostViewModel.CurrentList.FOUND -> {
+                binding.topPostsBtn.isSelected = false
+                binding.newPostsBtn.isSelected = false
+            }
+        }
     }
 
     override fun onDestroyView() {

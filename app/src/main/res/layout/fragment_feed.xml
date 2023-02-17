@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5E7FF">
+    android:background="#F8E9FF">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -22,13 +22,13 @@
         android:id="@+id/new_posts_btn"
         android:layout_width="140dp"
         android:layout_height="38dp"
-        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/button_selector"
         android:text="Новое"
         android:textAlignment="center"
         android:textAllCaps="false"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search_view" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -36,11 +36,11 @@
         android:layout_width="140dp"
         android:layout_height="38dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="50dp"
+        android:layout_marginStart="50dp"
         android:background="@drawable/button_selector"
         android:text="Популярное"
         android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search_view" />
 
     <androidx.appcompat.widget.SearchView

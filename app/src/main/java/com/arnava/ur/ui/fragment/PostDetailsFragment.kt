@@ -1,5 +1,6 @@
 package com.arnava.ur.ui.fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -47,7 +48,19 @@ class PostDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        with(binding.postItem) {
+        with(binding) {
+            setSaveButtonStyle(postData)
+            saveBtn.setOnClickListener {
+                if (postData.saved == true) {
+                    postData.saved = false
+                    postData.fullNameID?.let { viewModel.unsavePost(it) }
+                    setSaveButtonStyle(postData)
+                } else {
+                    postData.saved = true
+                    postData.fullNameID?.let { viewModel.savePost(it) }
+                    setSaveButtonStyle(postData)
+                }
+            }
             subredditBtn.text = "r/${postData?.subreddit}"
             gotoDetailsBtn.isVisible = false
             postName.text = postData.title
@@ -63,8 +76,8 @@ class PostDetailsFragment : Fragment() {
                     .into(bannerView)
             } else bannerView.isVisible = false
             authorName.text = postData.author
+            recyclerView.adapter = commentListAdapter
         }
-        binding.recyclerView.adapter = commentListAdapter
         viewModel.loadPostsComments(postData.id.toString())
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.commentsFlow.collect { comments ->
@@ -88,5 +101,15 @@ class PostDetailsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun FragmentPostDetailsBinding.setSaveButtonStyle(postData: ThingData?) {
+        saveBtn.text = if (postData?.saved == true) {
+            saveBtn.setTextColor(Color.parseColor("#FF6200EE"))
+            "Сохранено"
+        } else {
+            saveBtn.setTextColor(Color.parseColor("#70000000"))
+            "Сохранить"
+        }
     }
 }

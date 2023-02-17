@@ -41,4 +41,21 @@ class CommentsViewModel @Inject constructor(private val repository: MainReposito
             repository.resetVote(commentId)
         }
     }
+
+    fun saveComment(commentId: String) {
+        viewModelScope.launch {
+            repository.saveThing("comments", commentId)
+        }
+    }
+    fun savePost(postId: String) {
+        viewModelScope.launch {
+            repository.saveThing("posts", postId)
+        }
+    }
+    fun unsavePost(postId: String) {
+        viewModelScope.launch {
+            repository.unsaveThing(postId)
+        }
+    }
+
 }

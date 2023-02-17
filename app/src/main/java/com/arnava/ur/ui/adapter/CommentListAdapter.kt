@@ -42,13 +42,25 @@ class CommentListAdapter(
             }
             setThumbButtons(commentData)
             thumbUpBtn.setOnClickListener {
-                if (commentData?.liked == true) commentData.liked = null
-                else commentData?.liked = true
+                if (commentData?.liked == true) {
+                    commentData.liked = null
+                    commentData.fullNameID?.let { onThumbResetClick(it) }
+                }
+                else {
+                    commentData?.liked = true
+                    commentData?.fullNameID?.let { onThumbUpClick(it) }
+                }
                 setThumbButtons(commentData)
             }
             thumbDownBtn.setOnClickListener {
-                if (commentData?.liked == false) commentData.liked = null
-                else commentData?.liked = false
+                if (commentData?.liked == false) {
+                    commentData.liked = null
+                    commentData.fullNameID?.let { onThumbResetClick(it) }
+                }
+                else {
+                    commentData?.liked = false
+                    commentData?.fullNameID?.let { onThumbDownClick(it) }
+                }
                 setThumbButtons(commentData)
             }
             rootLayout.setPadding(nestingLevel!! * 30, 10, 0, 10)
@@ -60,15 +72,12 @@ class CommentListAdapter(
             true -> {
                 thumbUpBtn.isSelected = true
                 thumbDownBtn.isSelected = false
-                commentData.fullNameID?.let { onThumbUpClick(it) }
             }
             false -> {
-                commentData?.fullNameID?.let { onThumbDownClick(it) }
                 thumbDownBtn.isSelected = true
                 thumbUpBtn.isSelected = false
             }
             null -> {
-                commentData?.fullNameID?.let { onThumbResetClick(it) }
                 thumbDownBtn.isSelected = false
                 thumbUpBtn.isSelected = false
             }

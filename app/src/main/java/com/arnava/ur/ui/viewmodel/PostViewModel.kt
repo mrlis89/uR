@@ -15,32 +15,52 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PostViewModel@Inject constructor(
+class PostViewModel @Inject constructor(
     private val repository: MainRepository,
-): ViewModel(){
-    private val _pagedPosts= MutableStateFlow<Flow<PagingData<Thing>>?>(null)
+) : ViewModel() {
+    var initialRun = true
+    var currentList = CurrentList.TOP
+    private val _pagedPosts = MutableStateFlow<Flow<PagingData<Thing>>?>(null)
     val pagedPosts = _pagedPosts.asStateFlow()
-    fun loadTopPosts(){
+    fun loadTopPosts() {
         _pagedPosts.value = Pager(
-            config = PagingConfig(pageSize = 25,enablePlaceholders = false),
-            pagingSourceFactory = {TopPostPagingSource(repository)}
+            config = PagingConfig(pageSize = 25, enablePlaceholders = false),
+            pagingSourceFactory = { TopPostPagingSource(repository) }
         ).flow.cachedIn(viewModelScope)
     }
 
-    fun loadNewPosts(){
+    fun loadNewPosts() {
         _pagedPosts.value = Pager(
-            config = PagingConfig(pageSize = 25,enablePlaceholders = false),
-            pagingSourceFactory = {NewPostPagingSource(repository)}
+            config = PagingConfig(pageSize = 25, enablePlaceholders = false),
+            pagingSourceFactory = { NewPostPagingSource(repository) }
         ).flow.cachedIn(viewModelScope)
     }
 
-    fun searchPosts(request :String){
+    fun searchPosts(request: String) {
         _pagedPosts.value = Pager(
-            config = PagingConfig(pageSize = 25,enablePlaceholders = false),
-            pagingSourceFactory = {SearchPostPagingSource(repository, request)}
+            config = PagingConfig(pageSize = 25, enablePlaceholders = false),
+            pagingSourceFactory = { SearchPostPagingSource(repository, request) }
         ).flow.cachedIn(viewModelScope)
+    }
+
+    fun savePost(postId: String) {
+        viewModelScope.launch {
+            repository.saveThing("posts", postId)
+        }
+    }
+
+    fun unsavePost(postId: String) {
+        viewModelScope.launch {
+            repository.unsaveThing(postId)
+        }
+    }
+
+    enum class CurrentList {
+        TOP, NEW, FOUND
     }
 }
+

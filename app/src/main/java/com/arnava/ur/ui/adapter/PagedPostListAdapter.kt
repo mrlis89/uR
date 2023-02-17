@@ -7,8 +7,6 @@ import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.arnava.ur.App
-import com.arnava.ur.R
 import com.arnava.ur.data.model.entity.Thing
 import com.arnava.ur.data.model.entity.ThingData
 import com.arnava.ur.databinding.PostLayoutBinding
@@ -19,6 +17,8 @@ import com.bumptech.glide.request.RequestOptions
 
 class PagedPostListAdapter(
     private val onItemClick: (ThingData) -> Unit,
+    private val onSaveClick: (String) -> Unit,
+    private val onUnsaveClick: (String) -> Unit,
 ) : PagingDataAdapter<Thing, PostListViewHolder>(PostDiffUtilCallback()) {
     private val itemExpandedMap = mutableMapOf<Int, Boolean>()
 
@@ -31,11 +31,19 @@ class PagedPostListAdapter(
         val postData = getItem(position)?.data
         itemExpandedMap.putIfAbsent(position, false)
         with(holder.binding) {
-            subredditBtn.text = "r/${ postData?.subreddit }"
-            saveBtn.text = if (postData?.saved == true) {
-                saveBtn.setTextColor(Color.parseColor("#FF6200EE"))
-                "Сохранено"
-            } else "Сохранить"
+            subredditBtn.text = "r/${postData?.subreddit}"
+            setSaveButtonStyle(postData)
+            saveBtn.setOnClickListener {
+                if (postData?.saved == true) {
+                    postData.saved = false
+                    postData.fullNameID?.let { onUnsaveClick(it) }
+                    setSaveButtonStyle(postData)
+                } else {
+                    postData?.saved = true
+                    postData?.fullNameID?.let { onSaveClick(it) }
+                    setSaveButtonStyle(postData)
+                }
+            }
             followBtn.isVisible = false
             postName.text = postData?.title
             Glide
@@ -48,11 +56,9 @@ class PagedPostListAdapter(
                 .into(bannerView)
             authorName.text = postData?.author
             bannerView.isVisible = itemExpandedMap[position] ?: false
-//            authorName.isVisible = itemExpandedMap[position] ?: false
             postName.setOnClickListener {
                 if (postData?.url?.isImage() == true) {
                     bannerView.isVisible = !bannerView.isVisible
-//                    authorName.isVisible = !authorName.isVisible
                     itemExpandedMap[position] = !itemExpandedMap[position]!!
                 }
             }
@@ -61,6 +67,16 @@ class PagedPostListAdapter(
             }
         }
 
+    }
+
+    private fun PostLayoutBinding.setSaveButtonStyle(postData: ThingData?) {
+        saveBtn.text = if (postData?.saved == true) {
+            saveBtn.setTextColor(Color.parseColor("#FF6200EE"))
+            "Сохранено"
+        } else {
+            saveBtn.setTextColor(Color.parseColor("#70000000"))
+            "Сохранить"
+        }
     }
 
 }

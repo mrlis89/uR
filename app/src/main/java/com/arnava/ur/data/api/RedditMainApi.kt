@@ -60,4 +60,15 @@ interface RedditMainApi {
     suspend fun deleteFromFriends(
         @Path("username") username: String,
     )
+
+    //Saving
+    @POST("api/save")
+    suspend fun saveThing(
+        @Query("category") thingCategory: String,
+        @Query("id") thingId: String,
+    )
+    @POST("api/unsave")
+    suspend fun unsaveThing(
+        @Query("id") thingId: String,
+    )
 }

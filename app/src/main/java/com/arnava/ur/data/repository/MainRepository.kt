@@ -18,6 +18,8 @@ class MainRepository @Inject constructor(
     suspend fun upVote(id: String) = redditMainApi.vote(id, 1)
     suspend fun downVote(id: String) = redditMainApi.vote(id, -1)
     suspend fun resetVote(id: String) = redditMainApi.vote(id, 0)
+    suspend fun saveThing(thingCategory: String, thingId: String) = redditMainApi.saveThing(thingCategory, thingId)
+    suspend fun unsaveThing(thingId: String) = redditMainApi.unsaveThing(thingId)
 
     suspend fun getPostsComments(postId: String): List<Thing> {
         val redditResp = redditMainApi.getPostsComments(postId)
