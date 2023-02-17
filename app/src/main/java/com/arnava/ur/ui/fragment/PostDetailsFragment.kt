@@ -30,7 +30,9 @@ class PostDetailsFragment : Fragment() {
     private val commentListAdapter = CommentListAdapter(
         { upVote(it) },
         { downVote(it) },
-        { resetVote(it) }
+        { resetVote(it) },
+        { saveComment(it) },
+        { unsaveComment(it) }
     )
 
     override fun onCreateView(
@@ -49,16 +51,16 @@ class PostDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
-            setSaveButtonStyle(postData)
+            changeSavePostButton(postData)
             saveBtn.setOnClickListener {
                 if (postData.saved == true) {
                     postData.saved = false
                     postData.fullNameID?.let { viewModel.unsavePost(it) }
-                    setSaveButtonStyle(postData)
+                    changeSavePostButton(postData)
                 } else {
                     postData.saved = true
                     postData.fullNameID?.let { viewModel.savePost(it) }
-                    setSaveButtonStyle(postData)
+                    changeSavePostButton(postData)
                 }
             }
             subredditBtn.text = "r/${postData?.subreddit}"
@@ -98,12 +100,20 @@ class PostDetailsFragment : Fragment() {
         viewModel.resetVote(commentId)
     }
 
+    private fun saveComment(commentId: String) {
+        viewModel.saveComment(commentId)
+    }
+
+    private fun unsaveComment(commentId: String) {
+        viewModel.unsaveComment(commentId)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
-    private fun FragmentPostDetailsBinding.setSaveButtonStyle(postData: ThingData?) {
+    private fun FragmentPostDetailsBinding.changeSavePostButton(postData: ThingData?) {
         saveBtn.text = if (postData?.saved == true) {
             saveBtn.setTextColor(Color.parseColor("#FF6200EE"))
             "Сохранено"

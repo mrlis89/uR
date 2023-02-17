@@ -1,8 +1,8 @@
 package com.arnava.ur.data.api
 
 import com.arnava.ur.data.model.entity.Listing
-import com.arnava.ur.data.model.users.Friends
 import com.arnava.ur.data.model.users.AccountInfo
+import com.arnava.ur.data.model.users.Friends
 import com.arnava.ur.data.model.users.UserInfo
 import retrofit2.http.*
 
@@ -44,7 +44,8 @@ interface RedditMainApi {
 
     @GET("user/{username}/about")
     suspend fun userInfo(
-        @Path("username") userName: String): UserInfo
+        @Path("username") userName: String
+    ): UserInfo
 
     //Friends
     @GET("/api/v1/me/friends")
@@ -67,8 +68,22 @@ interface RedditMainApi {
         @Query("category") thingCategory: String,
         @Query("id") thingId: String,
     )
+
     @POST("api/unsave")
     suspend fun unsaveThing(
         @Query("id") thingId: String,
     )
+
+    @GET("user/{username}/saved?type=links")
+    suspend fun getSavedPosts(
+        @Path("username") username: String,
+        @Query("after") page: String = "",
+    ): Listing
+
+    @GET("user/{username}/saved?type=comments")
+    suspend fun getSavedComments(
+        @Path("username") username: String,
+        @Query("after") page: String = ""
+    ): String
+
 }

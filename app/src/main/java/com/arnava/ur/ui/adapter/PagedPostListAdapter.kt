@@ -32,16 +32,16 @@ class PagedPostListAdapter(
         itemExpandedMap.putIfAbsent(position, false)
         with(holder.binding) {
             subredditBtn.text = "r/${postData?.subreddit}"
-            setSaveButtonStyle(postData)
+            changeSavePostButton(postData)
             saveBtn.setOnClickListener {
                 if (postData?.saved == true) {
                     postData.saved = false
                     postData.fullNameID?.let { onUnsaveClick(it) }
-                    setSaveButtonStyle(postData)
+                    changeSavePostButton(postData)
                 } else {
                     postData?.saved = true
                     postData?.fullNameID?.let { onSaveClick(it) }
-                    setSaveButtonStyle(postData)
+                    changeSavePostButton(postData)
                 }
             }
             followBtn.isVisible = false
@@ -69,7 +69,7 @@ class PagedPostListAdapter(
 
     }
 
-    private fun PostLayoutBinding.setSaveButtonStyle(postData: ThingData?) {
+    private fun PostLayoutBinding.changeSavePostButton(postData: ThingData?) {
         saveBtn.text = if (postData?.saved == true) {
             saveBtn.setTextColor(Color.parseColor("#FF6200EE"))
             "Сохранено"

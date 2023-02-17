@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">uR</string>
     <string name="login_via_reddit">Войти</string>
-    <string name="title_feed">Feed</string>
-    <string name="title_favorite">Favorite</string>
-    <string name="title_profile">Profile</string>
+    <string name="title_feed">Лента</string>
+    <string name="title_favorite">Избранное</string>
+    <string name="title_profile">Профиль</string>
     <string name="title_activity_onboarding">OnboardingActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
