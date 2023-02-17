@@ -49,29 +49,49 @@ class FavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        when (viewModel.currentList) {
+            FavoriteViewModel.CurrentList.COMMENTS -> {
+                loadComments()
+            }
+            FavoriteViewModel.CurrentList.POSTS -> {
+                loadPosts()
+            }
+        }
         binding.savedPostsBtn.setOnClickListener {
-            binding.recyclerView.adapter = pagedPostListAdapter
-            viewModel.loadSavedPosts(UserInfoStorage.userName.toString())
-
-            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                viewModel.savedPosts.collectLatest { pagingDataFlow ->
-                    pagingDataFlow?.collect {
-                        pagedPostListAdapter.submitData(it)
-                    }
-                }
-            }
+            loadPosts()
         }
-
         binding.savedCommentsBtn.setOnClickListener {
-            binding.recyclerView.adapter = commentListAdapter
-            viewModel.loadSavedComments(UserInfoStorage.userName.toString())
+            loadComments()
+        }
 
-            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                viewModel.commentsFlow.collect { comments ->
-                    comments?.let { commentListAdapter.setData(it) }
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.savedPosts.collectLatest { pagingDataFlow ->
+                pagingDataFlow?.collect {
+                    pagedPostListAdapter.submitData(it)
                 }
             }
         }
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.commentsFlow.collect { comments ->
+                comments?.let { commentListAdapter.setData(it) }
+            }
+        }
+    }
+
+    private fun loadPosts() {
+        binding.recyclerView.adapter = pagedPostListAdapter
+        viewModel.loadSavedPosts(UserInfoStorage.userName.toString())
+        viewModel.currentList = FavoriteViewModel.CurrentList.POSTS
+        binding.savedPostsBtn.isSelected = true
+        binding.savedCommentsBtn.isSelected = false
+    }
+
+    private fun loadComments() {
+        binding.recyclerView.adapter = commentListAdapter
+        viewModel.loadSavedComments(UserInfoStorage.userName.toString())
+        viewModel.currentList = FavoriteViewModel.CurrentList.COMMENTS
+        binding.savedPostsBtn.isSelected = false
+        binding.savedCommentsBtn.isSelected = true
     }
 
     private fun upVote(commentId: String) {

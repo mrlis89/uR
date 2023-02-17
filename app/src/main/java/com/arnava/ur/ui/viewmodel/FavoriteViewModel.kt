@@ -20,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FavoriteViewModel @Inject constructor(private val repository: MainRepository) :
     ViewModel() {
-
+    var currentList = CurrentList.POSTS
     private val _commentsFlow = MutableStateFlow<List<Thing>?>(emptyList())
     val commentsFlow = _commentsFlow.asStateFlow()
 
@@ -75,6 +75,10 @@ class FavoriteViewModel @Inject constructor(private val repository: MainReposito
         viewModelScope.launch {
             repository.unsaveThing(postId)
         }
+    }
+
+    enum class CurrentList {
+        COMMENTS, POSTS
     }
 
 }
