@@ -25,6 +25,7 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="50dp"
         android:background="@drawable/button_selector"
+        android:textColor="@drawable/button_text_selector"
         android:text="Комментарии"
         android:textAlignment="center"
         android:textAllCaps="false"
@@ -38,13 +39,14 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="50dp"
         android:background="@drawable/button_selector"
+        android:textColor="@drawable/button_text_selector"
         android:text="Посты"
         android:textAllCaps="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/title_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

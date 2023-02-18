@@ -12,19 +12,24 @@ import javax.inject.Inject
 class MainRepository @Inject constructor(
     private val redditMainApi: RedditMainApi
 ) {
+    //posts
     suspend fun getTopPosts(page: String) = redditMainApi.getTopPosts(page)
     suspend fun getNewPosts(page: String) = redditMainApi.getNewPosts(page)
     suspend fun getSavedPosts(userName: String, page: String) = redditMainApi.getSavedPosts(userName, page)
     suspend fun searchPosts(page: String, request: String) =
         redditMainApi.searchPosts(page, request)
 
+    //voting
     suspend fun upVote(id: String) = redditMainApi.vote(id, 1)
     suspend fun downVote(id: String) = redditMainApi.vote(id, -1)
     suspend fun resetVote(id: String) = redditMainApi.vote(id, 0)
+
+    //saving
     suspend fun saveThing(thingCategory: String, thingId: String) =
         redditMainApi.saveThing(thingCategory, thingId)
     suspend fun unsaveThing(thingId: String) = redditMainApi.unsaveThing(thingId)
 
+    //comments
     suspend fun getPostsComments(postId: String): List<Thing> {
         val moshi = Moshi.Builder().build()
         val type = Types.newParameterizedType(List::class.java, Listing::class.java)
@@ -54,6 +59,10 @@ class MainRepository @Inject constructor(
         return resp?.listData?.things
     }
 
+    //profile
     suspend fun getAccountInfo() = redditMainApi.getAccountInfo()
+    suspend fun getFriendList() = redditMainApi.getFriends()
+    suspend fun getUserInfo(userName: String) = redditMainApi.getUserInfo(userName)
+
 
 }

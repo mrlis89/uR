@@ -8,7 +8,8 @@
     <fragment
         android:id="@+id/navigation_feed"
         android:name="com.arnava.ur.ui.fragment.FeedFragment"
-        android:label="FeedFragment" >
+        android:label="FeedFragment"
+        tools:layout="@layout/fragment_feed">
         <action
             android:id="@+id/action_navigation_feed_to_postDetailsFragment"
             app:destination="@id/postDetailsFragment" />
@@ -24,9 +25,17 @@
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.arnava.ur.ui.fragment.ProfileFragment"
-        android:label="ProfileFragment" />
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/action_navigation_profile_to_friendsFragment"
+            app:destination="@id/friendsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/postDetailsFragment"
         android:name="com.arnava.ur.ui.fragment.PostDetailsFragment"
         android:label="PostDetailsFragment" />
+    <fragment
+        android:id="@+id/friendsFragment"
+        android:name="com.arnava.ur.ui.fragment.FriendsFragment"
+        android:label="FriendsFragment" />
 </navigation>

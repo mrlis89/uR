@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arnava.ur.data.repository.AuthRepository

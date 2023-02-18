@@ -3,19 +3,101 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F8E9FF">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:text="profile"
-        android:textSize="16sp"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/friends_btn"
+        android:layout_width="140dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="136dp"
+        android:background="@drawable/button_selector"
+        android:text="Список друзей"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@drawable/button_text_selector"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintTop_toBottomOf="@+id/user_info_view" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/clear_cache_btn"
+        android:layout_width="140dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/button_selector"
+        android:text="Очистить кэш"
+        android:textAllCaps="false"
+        android:textColor="@drawable/button_text_selector"
+        app:layout_constraintStart_toStartOf="@+id/friends_btn"
+        app:layout_constraintTop_toBottomOf="@+id/friends_btn" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/logout_btn"
+        android:layout_width="140dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="120dp"
+        android:background="@drawable/button_logout_selector"
+        android:text="Выйти из профиля"
+        android:textAllCaps="false"
+        android:textColor="@drawable/button_text_selector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/friends_btn"
+        app:layout_constraintTop_toBottomOf="@+id/clear_cache_btn" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/user_info_view"
+        android:layout_width="383dp"
+        android:layout_height="404dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/round_corners_card"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/user_icon"
+        android:layout_width="226dp"
+        android:layout_height="294dp"
+        android:layout_marginTop="12dp"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/user_info_view"
+        app:layout_constraintStart_toStartOf="@+id/user_info_view"
+        app:layout_constraintTop_toTopOf="@+id/user_info_view"
+        app:srcCompat="@drawable/placeholder_photo" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="имя профиля"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/user_info_view"
+        app:layout_constraintStart_toStartOf="@+id/user_info_view"
+        app:layout_constraintTop_toBottomOf="@+id/user_icon" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/user_total_friends"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="друзей"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/user_info_view"
+        app:layout_constraintStart_toStartOf="@+id/user_info_view"
+        app:layout_constraintTop_toBottomOf="@+id/user_name" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/user_total_karma"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="карма"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/user_info_view"
+        app:layout_constraintStart_toStartOf="@+id/user_info_view"
+        app:layout_constraintTop_toBottomOf="@+id/user_total_friends" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

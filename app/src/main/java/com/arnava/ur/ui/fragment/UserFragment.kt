@@ -6,10 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.arnava.ur.databinding.FragmentFavoriteBinding
-import com.arnava.ur.databinding.FragmentFeedBinding
 
 
-class BlankFragment : Fragment() {
+class UserFragment : Fragment() {
 
     private var _binding: FragmentFavoriteBinding? = null
 
