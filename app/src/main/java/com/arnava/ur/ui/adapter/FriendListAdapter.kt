@@ -1,20 +1,13 @@
 package com.arnava.ur.ui.adapter
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.arnava.ur.data.model.entity.Thing
-import com.arnava.ur.data.model.entity.ThingData
 import com.arnava.ur.data.model.users.UserInfo
-import com.arnava.ur.databinding.CommentLayoutBinding
 import com.arnava.ur.databinding.FriendCardLayoutBinding
-import com.arnava.ur.utils.constants.DATE_FORMAT
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import java.text.SimpleDateFormat
-import java.util.*
 
 class FriendListAdapter(
     private val onItemClick: (String) -> Unit,
@@ -31,17 +24,17 @@ class FriendListAdapter(
     }
 
     override fun onBindViewHolder(holder: FriendListViewHolder, position: Int) {
-        val commentData = data[position]?.userInfoData
+        val userInfoData = data[position]?.userInfoData
 
         with(holder.binding) {
+            userName.text = userInfoData?.name
             Glide
                 .with(holder.itemView)
-                .load(commentData?.snoovatarImg)
+                .load(userInfoData?.snoovatarImg)
                 .apply(
                     RequestOptions()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                 )
-                .circleCrop()
                 .into(userIcon)
         }
     }

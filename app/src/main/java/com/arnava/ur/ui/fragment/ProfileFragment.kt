@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.arnava.ur.R
 import com.arnava.ur.databinding.FragmentProfileBinding
 import com.arnava.ur.ui.viewmodel.ProfileViewModel
 import com.bumptech.glide.Glide
@@ -48,6 +50,9 @@ class ProfileFragment : Fragment() {
                     userTotalKarma.text = "Карма: ${accountInfo?.totalKarma}"
                 }
             }
+        }
+        binding.friendsBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_profile_to_friendsFragment)
         }
     }
 

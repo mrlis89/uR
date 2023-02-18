@@ -169,7 +169,7 @@ data class Subreddit(
     @Json(name = "title")
     val title: String,
     @Json(name = "coins")
-    val coins: Int,
+    val coins: Int?,
     @Json(name = "previous_names")
     val previousNames: List<Any>,
     @Json(name = "over_18")
