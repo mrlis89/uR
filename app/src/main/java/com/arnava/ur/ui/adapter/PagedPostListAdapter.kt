@@ -44,6 +44,9 @@ class PagedPostListAdapter(
                     changeSavePostButton(postData)
                 }
             }
+            followBtn.setOnClickListener {
+
+            }
             followBtn.isVisible = false
             postName.text = postData?.title
             Glide

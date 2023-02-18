@@ -21,7 +21,7 @@ data class UserInfoData(
     @Json(name = "subreddit")
     val subreddit: Subreddit,
     @Json(name = "snoovatar_size")
-    val snoovatarSize: List<Int>,
+    val snoovatarSize: List<Int>?,
     @Json(name = "awardee_karma")
     val awardeeKarma: Int,
     @Json(name = "id")

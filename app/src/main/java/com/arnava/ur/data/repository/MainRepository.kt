@@ -59,10 +59,12 @@ class MainRepository @Inject constructor(
         return resp?.listData?.things
     }
 
-    //profile
+    //users
     suspend fun getAccountInfo() = redditMainApi.getAccountInfo()
     suspend fun getFriendList() = redditMainApi.getFriends()
     suspend fun getUserInfo(userName: String) = redditMainApi.getUserInfo(userName)
+    suspend fun addToFriends(userName: String) = redditMainApi.addToFriends(userName, "{\"name\": \"$userName\"}")
+    suspend fun deleteFromFriends(userName: String) = redditMainApi.deleteFromFriends(userName)
 
 
 }

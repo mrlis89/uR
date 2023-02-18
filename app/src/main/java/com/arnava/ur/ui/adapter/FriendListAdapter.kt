@@ -3,6 +3,7 @@ package com.arnava.ur.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.arnava.ur.R
 import com.arnava.ur.data.model.users.UserInfo
 import com.arnava.ur.databinding.FriendCardLayoutBinding
 import com.bumptech.glide.Glide
@@ -31,6 +32,7 @@ class FriendListAdapter(
             Glide
                 .with(holder.itemView)
                 .load(userInfoData?.snoovatarImg)
+                .placeholder(R.drawable.avatar_default)
                 .apply(
                     RequestOptions()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)

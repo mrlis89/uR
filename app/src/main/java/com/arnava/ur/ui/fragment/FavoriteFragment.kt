@@ -36,7 +36,7 @@ class FavoriteFragment : Fragment() {
     private val pagedPostListAdapter = PagedPostListAdapter(
         { onPostClick(it) },
         { onSavePostClick(it) },
-        { onUnsavePostClick(it) }
+        { onUnsavePostClick(it) },
     )
 
     override fun onCreateView(

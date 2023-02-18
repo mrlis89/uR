@@ -77,6 +77,17 @@ class FavoriteViewModel @Inject constructor(private val repository: MainReposito
         }
     }
 
+    fun addToFriends(name: String) {
+        viewModelScope.launch {
+            repository.addToFriends(name)
+        }
+    }
+    fun deleteFromFriends(name: String) {
+        viewModelScope.launch {
+            repository.deleteFromFriends(name)
+        }
+    }
+
     enum class CurrentList {
         COMMENTS, POSTS
     }

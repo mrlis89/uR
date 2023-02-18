@@ -4,6 +4,7 @@ import com.arnava.ur.data.model.entity.Listing
 import com.arnava.ur.data.model.users.AccountInfo
 import com.arnava.ur.data.model.users.Friends
 import com.arnava.ur.data.model.users.UserInfo
+import retrofit2.Response
 import retrofit2.http.*
 
 interface RedditMainApi {
@@ -54,13 +55,12 @@ interface RedditMainApi {
     @PUT("/api/v1/me/friends/{username}")
     suspend fun addToFriends(
         @Path("username") username: String,
-        @Body requestBody: String = "\"name\": $username"
+        @Body jsonBody: String
     )
-
     @DELETE("/api/v1/me/friends/{username}")
     suspend fun deleteFromFriends(
         @Path("username") username: String,
-    )
+    ): Response<Unit>
 
     //Saving
     @POST("api/save")

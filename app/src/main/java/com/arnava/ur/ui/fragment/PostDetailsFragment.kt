@@ -27,6 +27,7 @@ class PostDetailsFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var postData: ThingData
     private val viewModel: CommentsViewModel by viewModels()
+    private var userIsFriend = false
     private val commentListAdapter = CommentListAdapter(
         { upVote(it) },
         { downVote(it) },
@@ -38,7 +39,7 @@ class PostDetailsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         arguments?.let { arg ->
             arg.getParcelable<ThingData>(THING_DATA)?.let {
                 postData = it
@@ -51,6 +52,7 @@ class PostDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
+            postData.author?.let { viewModel.loadUserInfo(it) }
             changeSavePostButton(postData)
             saveBtn.setOnClickListener {
                 if (postData.saved == true) {
@@ -63,6 +65,26 @@ class PostDetailsFragment : Fragment() {
                     changeSavePostButton(postData)
                 }
             }
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                viewModel.userInfoFlow.collect { userInfo ->
+                    userInfo?.userInfoData?.isFriend?.let {
+                        userIsFriend = it
+                        changeFollowButton(it)
+                    }
+                }
+            }
+            followBtn.setOnClickListener {
+                if (userIsFriend) {
+                    userIsFriend = false
+                    postData.author?.let { viewModel.deleteFromFriends(it) }
+                    changeFollowButton(userIsFriend)
+                } else {
+                    userIsFriend = true
+                    postData.author?.let { viewModel.addToFriends(it) }
+                    changeFollowButton(userIsFriend)
+                }
+            }
+
             subredditBtn.text = "r/${postData?.subreddit}"
             gotoDetailsBtn.isVisible = false
             postName.text = postData.title
@@ -120,6 +142,16 @@ class PostDetailsFragment : Fragment() {
         } else {
             saveBtn.setTextColor(Color.parseColor("#70000000"))
             "Сохранить"
+        }
+    }
+
+    private fun FragmentPostDetailsBinding.changeFollowButton(userIsFriend: Boolean) {
+        followBtn.text = if (userIsFriend) {
+            followBtn.setTextColor(Color.parseColor("#FF6200EE"))
+            "В друзьях"
+        } else {
+            followBtn.setTextColor(Color.parseColor("#70000000"))
+            "Подписаться"
         }
     }
 }
