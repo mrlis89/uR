@@ -51,6 +51,7 @@ class PostDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.progressBtn.isVisible = true
         with(binding) {
             postData.author?.let { viewModel.loadUserInfo(it) }
             changeSavePostButton(postData)
@@ -105,9 +106,12 @@ class PostDetailsFragment : Fragment() {
         viewModel.loadPostsComments(postData.id.toString())
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.commentsFlow.collect { comments ->
-                comments?.let { commentListAdapter.setData(it) }
+                if (!comments.isNullOrEmpty()) binding.progressBtn.isVisible = false
+                comments?.let {commentListAdapter.setData(it)}
             }
         }
+
+
     }
 
     private fun upVote(commentId: String) {

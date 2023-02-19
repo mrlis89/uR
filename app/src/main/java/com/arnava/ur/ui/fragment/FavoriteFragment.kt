@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import com.arnava.ur.R
 import com.arnava.ur.data.model.entity.ThingData
 import com.arnava.ur.databinding.FragmentFavoriteBinding
@@ -64,6 +66,7 @@ class FavoriteFragment : Fragment() {
         }
         binding.savedCommentsBtn.setOnClickListener {
             loadComments()
+            binding.progressBtn.isVisible = true
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
@@ -75,7 +78,18 @@ class FavoriteFragment : Fragment() {
         }
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.commentsFlow.collect { comments ->
-                comments?.let { commentListAdapter.setData(it) }
+                comments?.let {
+                    commentListAdapter.setData(it)
+                    binding.progressBtn.isVisible = false
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            pagedPostListAdapter.loadStateFlow.collectLatest {
+                binding.progressBtn.isVisible = it.refresh is LoadState.Loading
+                if (it.refresh is LoadState.Loading) binding.refreshLayout.isVisible = false
+                if (it.refresh is LoadState.Error || it.append is LoadState.Error) binding.refreshLayout.isVisible = true
             }
         }
     }

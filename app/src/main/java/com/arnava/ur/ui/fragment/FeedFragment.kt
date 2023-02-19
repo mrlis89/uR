@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import com.arnava.ur.R
 import com.arnava.ur.data.model.entity.ThingData
 import com.arnava.ur.databinding.FragmentFeedBinding
@@ -86,13 +88,26 @@ class FeedFragment : Fragment() {
                 return false
             }
         })
+
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            pagedPostListAdapter.loadStateFlow.collectLatest {
+                binding.progressBtn.isVisible = it.refresh is LoadState.Loading
+                if (it.refresh is LoadState.Loading) binding.refreshLayout.isVisible = false
+                if (it.refresh is LoadState.Error || it.append is LoadState.Error) binding.refreshLayout.isVisible = true
+            }
+        }
     }
 
     private fun loadInitialList() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             while (true) {
-                if (TokenStorage.accessToken == null) delay(500)
+                if (TokenStorage.accessToken == null) {
+                    binding.progressBtn.isVisible = true
+                    delay(500)
+                }
                 else {
+                    binding.progressBtn.isVisible = false
                     viewModel.loadTopPosts()
                     viewModel.putUserNameToStorage()
                     break
