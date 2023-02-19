@@ -26,7 +26,7 @@ class UserViewModel @Inject constructor(
     val usersPosts = _usersPosts.asStateFlow()
     fun loadUsersPosts(userName: String) {
         _usersPosts.value = Pager(
-            config = PagingConfig(pageSize = 5, enablePlaceholders = false),
+            config = PagingConfig(pageSize = 25),
             pagingSourceFactory = { UsersPostPagingSource(repository, userName) }
         ).flow.cachedIn(viewModelScope)
     }

@@ -16,9 +16,18 @@ class MainRepository @Inject constructor(
     suspend fun getTopPosts(page: String) = redditMainApi.getTopPosts(page)
     suspend fun getNewPosts(page: String) = redditMainApi.getNewPosts(page)
     suspend fun getSavedPosts(userName: String, page: String) = redditMainApi.getSavedPosts(userName, page)
-    suspend fun getUsersTopPosts(userName: String, page: String) = redditMainApi.getUsersTopPosts(userName, page)
     suspend fun searchPosts(page: String, request: String) =
         redditMainApi.searchPosts(page, request)
+    suspend fun getUsersTopPosts(userName: String, page: String): Listing? {
+        val moshi = Moshi.Builder().build()
+        val adapter: JsonAdapter<Listing> = moshi.adapter(Listing::class.java)
+
+        val redditResp = redditMainApi.getUsersTopPosts(userName, page)
+        //empty child element has wrong type: String instead of null
+        val correctedResp = redditResp.replace("\"replies\": \"\"", "\"replies\": null")
+        val resp = adapter.fromJson(correctedResp)
+        return resp
+    }
 
     //voting
     suspend fun upVote(id: String) = redditMainApi.vote(id, 1)

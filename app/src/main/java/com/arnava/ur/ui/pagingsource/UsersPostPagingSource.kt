@@ -19,11 +19,15 @@ class UsersPostPagingSource @Inject constructor(
             repository.getUsersTopPosts(userName, page)
         }.fold(
             onSuccess = {
-                val posts = it.listData?.things
+                val res = mutableListOf<Thing>()
+                val posts = it?.listData?.things
+                posts?.forEach { post ->
+                    if (post.kind == "t3") res.add(post) //reddit response contains wrong info (comments in some situations)
+                }
                 LoadResult.Page(
-                    data = posts ?: emptyList(),
+                    data = res,
                     prevKey = null,
-                    nextKey = it.listData?.after
+                    nextKey = it?.listData?.after
                 )
             },
             onFailure = {

@@ -31,11 +31,11 @@ interface RedditMainApi {
         @Query("after") page: String = "",
     ): Listing
 
-    @GET("user/{username}/?type=links&sort=top&limit=5")
+    @GET("user/{username}/?type=links&sort=top&limit=25")
     suspend fun getUsersTopPosts(
         @Path("username") username: String,
         @Query("after") page: String = "",
-    ): Listing
+    ): String
 
     //voting
     @POST("/api/vote")
