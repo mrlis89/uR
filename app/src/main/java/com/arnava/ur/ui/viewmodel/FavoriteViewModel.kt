@@ -27,12 +27,12 @@ class FavoriteViewModel @Inject constructor(private val repository: MainReposito
     fun loadSavedComments(userName: String) {
         viewModelScope.launch {
             _commentsFlow.value = repository.getSavedComments(userName)
-            Test(_commentsFlow.value)
         }
     }
 
     private val _savedPosts = MutableStateFlow<Flow<PagingData<Thing>>?>(null)
     val savedPosts = _savedPosts.asStateFlow()
+
     fun loadSavedPosts(userName: String) {
         _savedPosts.value = Pager(
             config = PagingConfig(pageSize = 25, enablePlaceholders = false),

@@ -17,6 +17,7 @@ import com.arnava.ur.ui.adapter.PagedPostListAdapter
 import com.arnava.ur.ui.viewmodel.FavoriteViewModel
 import com.arnava.ur.utils.auth.UserInfoStorage
 import com.arnava.ur.utils.constants.THING_DATA
+import com.arnava.ur.utils.constants.USER_NAME
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -37,6 +38,7 @@ class FavoriteFragment : Fragment() {
         { onPostClick(it) },
         { onSavePostClick(it) },
         { onUnsavePostClick(it) },
+        { onAuthorClick(it) }
     )
 
     override fun onCreateView(
@@ -125,11 +127,23 @@ class FavoriteFragment : Fragment() {
         }
     }
 
+    private fun onAuthorClick(authorName: String) {
+        val bundle = Bundle().apply {
+            putString(USER_NAME, authorName)
+        }
+        findNavController().navigate(R.id.action_navigation_favorite_to_userFragment, bundle)
+        parentFragmentManager.commit {
+            replace(R.id.nav_host_fragment, UserFragment::class.java, bundle)
+            addToBackStack(FavoriteFragment::class.java.name)
+        }
+    }
+
     private fun onSavePostClick(postId: String) = viewModel.savePost(postId)
     private fun onUnsavePostClick(postId: String) = viewModel.unsavePost(postId)
 
     override fun onDestroyView() {
         super.onDestroyView()
+        binding.recyclerView.adapter = null
         _binding = null
     }
 }

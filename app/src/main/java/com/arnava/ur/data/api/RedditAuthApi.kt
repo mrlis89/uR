@@ -24,7 +24,7 @@ interface RedditAuthApi {
     ): Response<Token>
 
     @POST("revoke_token")
-    fun revokeToken(
+    suspend fun revokeToken(
         @Header("Authorization") header: String,
         @Query("token") token: String,
         @Query("token_type_hint") tokenTypeHint: String

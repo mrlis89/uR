@@ -24,6 +24,7 @@
         android:paddingHorizontal="10dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"
+        android:layout_marginBottom="70dp"
         android:layout_gravity="center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

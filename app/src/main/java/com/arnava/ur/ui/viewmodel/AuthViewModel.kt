@@ -4,12 +4,10 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arnava.ur.data.repository.AuthRepository
 import com.arnava.ur.data.repository.LocalRepository
-import com.arnava.ur.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.channels.Channel
@@ -64,7 +62,7 @@ class AuthViewModel @Inject constructor(
         viewModelScope.launch {
             loadingMutableStateFlow.value = true
             runCatching {
-                authRepository.getToken(
+                authRepository.getAccessToken(
                     tokenRequest.authorizationCode.toString()
                 )
             }.onSuccess {

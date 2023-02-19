@@ -26,6 +26,13 @@ class LocalRepository @Inject constructor(private val sharedPreferences: SharedP
         editor.apply()
     }
 
+    fun clearTokensLocally() {
+        editor.remove(REFRESH_KEY)
+        editor.apply()
+        TokenStorage.accessToken = null
+        TokenStorage.refreshToken = null
+    }
+
     fun saveUserName(name: String) {
         UserInfoStorage.userName = name
         editor.putString(USER_NAME, name)

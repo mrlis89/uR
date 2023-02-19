@@ -1,5 +1,6 @@
 package com.arnava.ur.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.arnava.ur.R
 import com.arnava.ur.databinding.FragmentProfileBinding
+import com.arnava.ur.ui.activity.AuthActivity
 import com.arnava.ur.ui.viewmodel.ProfileViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -53,6 +55,11 @@ class ProfileFragment : Fragment() {
         }
         binding.friendsBtn.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_profile_to_friendsFragment)
+        }
+        binding.logoutBtn.setOnClickListener {
+            viewModel.logout()
+            val intent = Intent(context, AuthActivity::class.java)
+            startActivity(intent)
         }
     }
 

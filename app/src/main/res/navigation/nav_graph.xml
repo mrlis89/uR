@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_feed_to_postDetailsFragment"
             app:destination="@id/postDetailsFragment" />
+        <action
+            android:id="@+id/action_navigation_feed_to_userFragment"
+            app:destination="@id/userFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_favorite"
@@ -21,6 +24,9 @@
         <action
             android:id="@+id/action_navigation_favorite_to_postDetailsFragment"
             app:destination="@id/postDetailsFragment" />
+        <action
+            android:id="@+id/action_navigation_favorite_to_userFragment"
+            app:destination="@id/userFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_profile"
@@ -37,5 +43,17 @@
     <fragment
         android:id="@+id/friendsFragment"
         android:name="com.arnava.ur.ui.fragment.FriendsFragment"
-        android:label="FriendsFragment" />
+        android:label="FriendsFragment" >
+        <action
+            android:id="@+id/action_friendsFragment_to_userFragment"
+            app:destination="@id/userFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.arnava.ur.ui.fragment.UserFragment"
+        android:label="UserFragment" >
+        <action
+            android:id="@+id/action_userFragment_to_postDetailsFragment"
+            app:destination="@id/postDetailsFragment" />
+    </fragment>
 </navigation>

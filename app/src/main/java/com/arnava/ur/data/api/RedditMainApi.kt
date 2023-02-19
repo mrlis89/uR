@@ -8,7 +8,6 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface RedditMainApi {
-
     //Posts
     @GET("top")
     suspend fun getTopPosts(
@@ -26,6 +25,19 @@ interface RedditMainApi {
         @Query("q") searchRequest: String = "",
     ): Listing
 
+    @GET("user/{username}/saved?type=links")
+    suspend fun getSavedPosts(
+        @Path("username") username: String,
+        @Query("after") page: String = "",
+    ): Listing
+
+    @GET("user/{username}/?type=links&sort=top&limit=5")
+    suspend fun getUsersTopPosts(
+        @Path("username") username: String,
+        @Query("after") page: String = "",
+    ): Listing
+
+    //voting
     @POST("/api/vote")
     suspend fun vote(
         @Query("id") id: String,
@@ -51,12 +63,12 @@ interface RedditMainApi {
     //Friends
     @GET("/api/v1/me/friends")
     suspend fun getFriends(): Friends
-
     @PUT("/api/v1/me/friends/{username}")
     suspend fun addToFriends(
         @Path("username") username: String,
         @Body jsonBody: String
     )
+
     @DELETE("/api/v1/me/friends/{username}")
     suspend fun deleteFromFriends(
         @Path("username") username: String,
@@ -73,12 +85,6 @@ interface RedditMainApi {
     suspend fun unsaveThing(
         @Query("id") thingId: String,
     )
-
-    @GET("user/{username}/saved?type=links")
-    suspend fun getSavedPosts(
-        @Path("username") username: String,
-        @Query("after") page: String = "",
-    ): Listing
 
     @GET("user/{username}/saved?type=comments")
     suspend fun getSavedComments(

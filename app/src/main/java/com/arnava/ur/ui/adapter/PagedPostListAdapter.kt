@@ -16,9 +16,10 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 
 class PagedPostListAdapter(
-    private val onItemClick: (ThingData) -> Unit,
+    private val onPostClick: (ThingData) -> Unit,
     private val onSaveClick: (String) -> Unit,
     private val onUnsaveClick: (String) -> Unit,
+    private val onAuthorClick: (String) -> Unit,
 ) : PagingDataAdapter<Thing, PostListViewHolder>(PostDiffUtilCallback()) {
     private val itemExpandedMap = mutableMapOf<Int, Boolean>()
 
@@ -44,8 +45,8 @@ class PagedPostListAdapter(
                     changeSavePostButton(postData)
                 }
             }
-            followBtn.setOnClickListener {
-
+            authorName.setOnClickListener {
+                postData?.author?.let { onAuthorClick(it) }
             }
             followBtn.isVisible = false
             postName.text = postData?.title
@@ -66,7 +67,7 @@ class PagedPostListAdapter(
                 }
             }
             gotoDetailsBtn.setOnClickListener {
-                postData?.let { onItemClick(it) }
+                postData?.let { onPostClick(it) }
             }
         }
 

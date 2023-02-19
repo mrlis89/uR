@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.arnava.ur.data.model.users.AccountInfo
 import com.arnava.ur.data.model.users.Friend
 import com.arnava.ur.data.model.users.UserInfo
+import com.arnava.ur.data.repository.AuthRepository
+import com.arnava.ur.data.repository.LocalRepository
 import com.arnava.ur.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,6 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val repository: MainRepository,
+    private val authRepository: AuthRepository,
+    private val localRepository: LocalRepository,
 ) : ViewModel() {
     private val _accountFlow = MutableStateFlow<AccountInfo?>(null)
     val accountFlow = _accountFlow.asStateFlow()
@@ -41,6 +45,13 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             _userInfoFlow.value = repository.getUserInfo(userName)
         }
+    }
+    fun logout() {
+        viewModelScope.launch {
+            authRepository.revokeAccessToken()
+            authRepository.revokeRefreshToken()
+        }
+        localRepository.clearTokensLocally()
     }
 
 
