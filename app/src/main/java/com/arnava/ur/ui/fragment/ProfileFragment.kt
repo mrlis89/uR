@@ -39,9 +39,11 @@ class ProfileFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.accountFlow.collect { accountInfo ->
                 with (binding) {
+                    val imageUrl = if (accountInfo?.snoovatarImg != "") accountInfo?.snoovatarImg else accountInfo?.iconImg
+                    val image = imageUrl?.substringBefore("?")
                     Glide
                         .with(this@ProfileFragment)
-                        .load(accountInfo?.snoovatarImg)
+                        .load(image)
                         .apply(
                             RequestOptions()
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)

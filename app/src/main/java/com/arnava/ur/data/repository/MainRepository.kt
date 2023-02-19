@@ -6,7 +6,6 @@ import com.arnava.ur.data.model.entity.Thing
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
-import com.squareup.moshi.adapter
 import javax.inject.Inject
 
 class MainRepository @Inject constructor(
@@ -25,8 +24,7 @@ class MainRepository @Inject constructor(
         val redditResp = redditMainApi.getUsersTopPosts(userName, page)
         //empty child element has wrong type: String instead of null
         val correctedResp = redditResp.replace("\"replies\": \"\"", "\"replies\": null")
-        val resp = adapter.fromJson(correctedResp)
-        return resp
+        return adapter.fromJson(correctedResp)
     }
 
     //voting

@@ -29,15 +29,19 @@ class FriendListAdapter(
 
         with(holder.binding) {
             userName.text = userInfoData?.name
+            val imageUrl = if (userInfoData?.snoovatarImg != "") userInfoData?.snoovatarImg else userInfoData?.iconImg
+            val image = imageUrl?.substringBefore("?")
             Glide
                 .with(holder.itemView)
-                .load(userInfoData?.snoovatarImg)
-                .placeholder(R.drawable.avatar_default)
+                .load(image)
                 .apply(
                     RequestOptions()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                 )
                 .into(userIcon)
+            root.setOnClickListener {
+                userInfoData?.name?.let { onItemClick(it) }
+            }
         }
     }
 

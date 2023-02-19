@@ -7,6 +7,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.arnava.ur.data.model.entity.Thing
+import com.arnava.ur.data.model.users.UserInfo
 import com.arnava.ur.data.repository.MainRepository
 import com.arnava.ur.ui.pagingsource.SavedPostPagingSource
 import com.arnava.ur.ui.pagingsource.TopPostPagingSource
@@ -24,11 +25,32 @@ class UserViewModel @Inject constructor(
 ) : ViewModel() {
     private val _usersPosts = MutableStateFlow<Flow<PagingData<Thing>>?>(null)
     val usersPosts = _usersPosts.asStateFlow()
+
+    private val _userInfoFlow = MutableStateFlow<UserInfo?>(null)
+    val userInfoFlow = _userInfoFlow.asStateFlow()
+
     fun loadUsersPosts(userName: String) {
         _usersPosts.value = Pager(
             config = PagingConfig(pageSize = 25),
             pagingSourceFactory = { UsersPostPagingSource(repository, userName) }
         ).flow.cachedIn(viewModelScope)
+    }
+
+    fun addToFriends(name: String) {
+        viewModelScope.launch {
+            repository.addToFriends(name)
+        }
+    }
+    fun deleteFromFriends(name: String) {
+        viewModelScope.launch {
+            repository.deleteFromFriends(name)
+        }
+    }
+
+    fun loadUserInfo(userName: String) {
+        viewModelScope.launch {
+            _userInfoFlow.value = repository.getUserInfo(userName)
+        }
     }
 
     fun savePost(postId: String) {

@@ -5,12 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.arnava.ur.R
 import com.arnava.ur.data.model.users.UserInfo
 import com.arnava.ur.databinding.FragmentFriendsBinding
 import com.arnava.ur.ui.adapter.FriendListAdapter
 import com.arnava.ur.ui.viewmodel.ProfileViewModel
+import com.arnava.ur.utils.constants.USER_NAME
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,7 +23,7 @@ class FriendsFragment : Fragment() {
     private val viewModel: ProfileViewModel by viewModels()
     private var _binding: FragmentFriendsBinding? = null
     private val binding get() = _binding!!
-    private val friendListAdapter = FriendListAdapter {}
+    private val friendListAdapter = FriendListAdapter { onFriendClick(it) }
     private val friendList = mutableListOf<UserInfo>()
 
     override fun onCreateView(
@@ -49,6 +53,17 @@ class FriendsFragment : Fragment() {
                     friendListAdapter.setData(friendList)
                 }
             }
+        }
+    }
+
+    private fun onFriendClick(friendName: String) {
+        val bundle = Bundle().apply {
+            putString(USER_NAME, friendName)
+        }
+        findNavController().navigate(R.id.action_friendsFragment_to_userFragment, bundle)
+        parentFragmentManager.commit {
+            replace(R.id.nav_host_fragment, UserFragment::class.java, bundle)
+            addToBackStack(FriendsFragment::class.java.name)
         }
     }
 

@@ -16,12 +16,17 @@ import com.arnava.ur.ui.adapter.PagedPostListAdapter
 import com.arnava.ur.ui.viewmodel.UserViewModel
 import com.arnava.ur.utils.constants.THING_DATA
 import com.arnava.ur.utils.constants.USER_NAME
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class UserFragment : Fragment() {
 
+    private var isFriend = false
+    private var friendName = ""
     private lateinit var userName: String
     private var _binding: FragmentUserBinding? = null
     private val binding get() = _binding!!
@@ -56,7 +61,49 @@ class UserFragment : Fragment() {
                 }
             }
         }
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.userInfoFlow.collect { userInfo ->
+                with(binding) {
+                    userInfo?.userInfoData?.let { infoData ->
+                        val imageUrl = if (infoData.snoovatarImg != "") infoData.snoovatarImg else infoData.iconImg
+                        val image = imageUrl.substringBefore("?")
+                        Glide
+                            .with(this@UserFragment)
+                            .load(image)
+                            .apply(
+                                RequestOptions()
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            )
+                            .into(userIcon)
+                        friendName = infoData.name
+                        userName.text = friendName
+                        userTotalKarma.text = "Карма: ${infoData?.totalKarma}"
+                        isFriend = infoData.isFriend
+                        checkIsFriend()
+                    }
+                }
+            }
+        }
         viewModel.loadUsersPosts(userName)
+        viewModel.loadUserInfo(userName)
+        with(binding) {
+            toFriendBtn.setOnClickListener {
+                if (isFriend) {
+                    viewModel.deleteFromFriends(friendName)
+                    isFriend = false
+                    checkIsFriend()
+                } else {
+                    viewModel.addToFriends(friendName)
+                    isFriend = true
+                    checkIsFriend()
+                }
+            }
+        }
+    }
+
+    private fun FragmentUserBinding.checkIsFriend() {
+        toFriendBtn.isSelected = isFriend
+        if (isFriend) toFriendBtn.text = "В Друзьях" else toFriendBtn.text = "В друзья"
     }
 
     private fun onPostClick(item: ThingData) {
