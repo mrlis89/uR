@@ -6,7 +6,11 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.arnava.ur.data.db.DbComment
+import com.arnava.ur.data.db.DbPost
 import com.arnava.ur.data.model.entity.Thing
+import com.arnava.ur.data.model.entity.ThingData
+import com.arnava.ur.data.repository.DbRepository
 import com.arnava.ur.data.repository.LocalRepository
 import com.arnava.ur.data.repository.MainRepository
 import com.arnava.ur.ui.pagingsource.NewPostPagingSource
@@ -23,6 +27,7 @@ import javax.inject.Inject
 class PostViewModel @Inject constructor(
     private val repository: MainRepository,
     private val localRepository: LocalRepository,
+    private val dbRepository: DbRepository,
 ) : ViewModel() {
     var initialRun = true
     var currentList = CurrentList.TOP
@@ -69,6 +74,33 @@ class PostViewModel @Inject constructor(
                 val accountInfo = repository.getAccountInfo()
                 localRepository.saveUserName(accountInfo.name)
             }
+        }
+    }
+
+    fun savePostToDb(post: ThingData) {
+        viewModelScope.launch {
+            dbRepository.addPost(
+                DbPost(
+                    post.fullNameID ?: "",
+                    post.subreddit ?: "",
+                    post.title ?: "",
+                    post.author ?: "",
+                    post.url ?: ""
+                    )
+            )
+        }
+    }
+    fun saveCommentToDb(comment: ThingData) {
+        viewModelScope.launch {
+            dbRepository.addComment(
+                DbComment(
+                    comment.fullNameID ?: "",
+                    comment.subreddit ?: "",
+                    comment.body ?: "",
+                    comment.author ?: "",
+                    comment.score ?: 0
+                    )
+            )
         }
     }
 

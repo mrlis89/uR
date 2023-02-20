@@ -21,6 +21,9 @@ class NetworkConnectivityObserver(
 
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
+    override fun isNetworkConnected() = connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo()!!
+        .isConnected()
+
     override fun observe(): Flow<ConnectivityObserver.Status> {
 
         return callbackFlow {
@@ -29,11 +32,6 @@ class NetworkConnectivityObserver(
                 override fun onAvailable(network: Network) {
                     super.onAvailable(network)
                     launch { send(ConnectivityObserver.Status.Available) }
-                }
-
-                override fun onLosing(network: Network, maxMsToLive: Int) {
-                    super.onLosing(network, maxMsToLive)
-                    launch { send(ConnectivityObserver.Status.Losing) }
                 }
 
                 override fun onLost(network: Network) {

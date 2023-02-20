@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.arnava.ur.App
 import com.arnava.ur.R
 import com.arnava.ur.databinding.ActivityMainBinding
 import com.arnava.ur.ui.viewmodel.AuthViewModel
+import com.arnava.ur.utils.connection.Connection
 import com.arnava.ur.utils.connection.ConnectivityObserver
 import com.arnava.ur.utils.connection.NetworkConnectivityObserver
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -22,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     private val authViewModel: AuthViewModel by viewModels()
     private var connectivityObserver: ConnectivityObserver =
         NetworkConnectivityObserver(App.appContext)
+    private var initialRun = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,26 +54,36 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launchWhenStarted {
             connectivityObserver.observe().collect {
                 when (it) {
-                    ConnectivityObserver.Status.Available ->
+                    ConnectivityObserver.Status.Available -> {
+                        Connection.isAvailable = true
+                        binding.navView.isVisible = true
+                        if (initialRun) initialRun = false
+                        else Toast.makeText(
+                                this@MainActivity,
+                                "соединение снова доступно, вы можете перейти на любую страницу",
+                                Toast.LENGTH_LONG
+                            ).show()
+                    }
+                    ConnectivityObserver.Status.Unavailable -> {
+                        binding.navView.isVisible = false
+                        Connection.isAvailable = false
                         Toast.makeText(
                             this@MainActivity,
-                            "connection available",
+                            "соединение недоступно, загружены локальные данные",
                             Toast.LENGTH_LONG
                         ).show()
-                    ConnectivityObserver.Status.Unavailable -> Toast.makeText(
-                        this@MainActivity,
-                        "connection unavailable",
-                        Toast.LENGTH_LONG
-                    ).show()
-                    ConnectivityObserver.Status.Losing -> Toast.makeText(
-                        this@MainActivity,
-                        "connection losing",
-                        Toast.LENGTH_LONG
-                    ).show()
+                        navController.navigate(R.id.offlineDataFragment)
+                    }
                     ConnectivityObserver.Status.Lost -> {
-                        Toast.makeText(this@MainActivity, "connection lost", Toast.LENGTH_LONG)
+                        binding.navView.isVisible = false
+                        Connection.isAvailable = false
+                        Toast.makeText(
+                            this@MainActivity,
+                            "соединение потеряно, загружены локальные данные",
+                            Toast.LENGTH_LONG
+                        )
                             .show()
-//                        navController.navigate(R.id.db_photos_fragment)
+                        navController.navigate(R.id.offlineDataFragment)
                     }
                 }
 
@@ -82,11 +95,16 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        if (authViewModel.hasRefreshToken()) {
+        if (connectivityObserver.isNetworkConnected()){
+            if (authViewModel.hasRefreshToken()) {
                 authViewModel.refreshToken()
+            } else {
+                val intent = Intent(this, AuthActivity::class.java)
+                startActivity(intent)
+            }
         } else {
-            val intent = Intent(this, AuthActivity::class.java)
-            startActivity(intent)
+            navController.navigate(R.id.offlineDataFragment)
+            binding.navView.isVisible = false
         }
 
     }

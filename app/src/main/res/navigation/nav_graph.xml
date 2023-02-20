@@ -56,4 +56,8 @@
             android:id="@+id/action_userFragment_to_postDetailsFragment"
             app:destination="@id/postDetailsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/offlineDataFragment"
+        android:name="com.arnava.ur.ui.fragment.OfflineDataFragment"
+        android:label="OfflineDataFragment" />
 </navigation>
