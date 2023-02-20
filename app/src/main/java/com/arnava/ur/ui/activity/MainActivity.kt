@@ -57,7 +57,9 @@ class MainActivity : AppCompatActivity() {
                     ConnectivityObserver.Status.Available -> {
                         Connection.isAvailable = true
                         binding.navView.isVisible = true
-                        authViewModel.refreshToken()
+                        if (authViewModel.hasRefreshToken()) {
+                            authViewModel.refreshToken()
+                        }
                         if (initialRun) initialRun = false
                         else Toast.makeText(
                                 this@MainActivity,

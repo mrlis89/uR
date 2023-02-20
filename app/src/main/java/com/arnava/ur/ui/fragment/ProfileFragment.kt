@@ -60,6 +60,7 @@ class ProfileFragment : Fragment() {
         }
         binding.logoutBtn.setOnClickListener {
             viewModel.logout()
+            findNavController().navigate(R.id.nav_graph)
             val intent = Intent(context, AuthActivity::class.java)
             startActivity(intent)
         }

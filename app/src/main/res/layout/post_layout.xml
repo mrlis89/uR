@@ -57,7 +57,7 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/banner_view"
-            android:layout_width="match_parent"
+            android:layout_width="366dp"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"

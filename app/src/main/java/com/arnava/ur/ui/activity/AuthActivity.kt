@@ -10,6 +10,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.viewpager2.widget.ViewPager2
+import com.arnava.ur.App
 import com.arnava.ur.databinding.ActivityAuthBinding
 import com.arnava.ur.databinding.ActivityOnboardingBinding
 import com.arnava.ur.ui.adapter.ViewPagerFragmentAdapter
@@ -61,5 +62,10 @@ class AuthActivity : AppCompatActivity() {
     private fun updateVisibility(isLoading: Boolean) {
         binding.loginButton.isVisible = !isLoading
         binding.loginProgress.isVisible = isLoading
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        (App.appContext as MainActivity).finish()
     }
 }
