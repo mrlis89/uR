@@ -67,6 +67,9 @@ class FeedFragment : Fragment() {
                 changeBtnState()
             }
         }
+        binding.refreshBtn.setOnClickListener {
+            pagedPostListAdapter.refresh()
+        }
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.pagedPosts.collectLatest { pagingDataFlow ->
                 pagingDataFlow?.collect {

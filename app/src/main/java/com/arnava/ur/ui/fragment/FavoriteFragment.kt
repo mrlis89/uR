@@ -84,6 +84,9 @@ class FavoriteFragment : Fragment() {
                 }
             }
         }
+        binding.refreshBtn.setOnClickListener {
+            pagedPostListAdapter.refresh()
+        }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             pagedPostListAdapter.loadStateFlow.collectLatest {
