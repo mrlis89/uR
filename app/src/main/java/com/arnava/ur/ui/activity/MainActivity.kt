@@ -51,12 +51,13 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launchWhenCreated {
             connectivityObserver.observe().collect {
                 when (it) {
                     ConnectivityObserver.Status.Available -> {
                         Connection.isAvailable = true
                         binding.navView.isVisible = true
+                        authViewModel.refreshToken()
                         if (initialRun) initialRun = false
                         else Toast.makeText(
                                 this@MainActivity,

@@ -4,28 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import androidx.paging.LoadState
-import com.arnava.ur.R
-import com.arnava.ur.data.model.entity.ThingData
-import com.arnava.ur.databinding.FragmentFavoriteBinding
 import com.arnava.ur.databinding.FragmentSavedToDbBinding
-import com.arnava.ur.ui.adapter.CommentListAdapter
 import com.arnava.ur.ui.adapter.DbCommentListAdapter
 import com.arnava.ur.ui.adapter.DbPostListAdapter
-import com.arnava.ur.ui.adapter.PagedPostListAdapter
 import com.arnava.ur.ui.viewmodel.DbViewModel
-import com.arnava.ur.ui.viewmodel.FavoriteViewModel
-import com.arnava.ur.utils.auth.UserInfoStorage
-import com.arnava.ur.utils.constants.THING_DATA
-import com.arnava.ur.utils.constants.USER_NAME
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class OfflineDataFragment : Fragment() {
@@ -53,6 +39,18 @@ class OfflineDataFragment : Fragment() {
             viewModel.posts.collect {
                 pagedPostListAdapter.setData(it)
             }
+        }
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.comments.collect {
+
+                commentListAdapter.setData(it)
+            }
+        }
+        binding.savedPostsBtn.setOnClickListener {
+            binding.recyclerView.adapter = pagedPostListAdapter
+        }
+        binding.savedCommentsBtn.setOnClickListener {
+            binding.recyclerView.adapter = commentListAdapter
         }
 
     }

@@ -141,8 +141,17 @@ class FeedFragment : Fragment() {
         }
     }
 
-    private fun onSaveClick(postId: String) = viewModel.savePost(postId)
-    private fun onUnsaveClick(postId: String) = viewModel.unsavePost(postId)
+    private fun onSaveClick(data: ThingData) {
+        data.fullNameID?.let { viewModel.savePost(it) }
+        viewModel.savePostToDb(data)
+    }
+    private fun onUnsaveClick(data: ThingData) {
+        data.fullNameID?.let {
+            viewModel.unsavePost(it)
+            viewModel.deletePostFromDb(data.fullNameID)
+        }
+
+    }
 
 
     private fun changeBtnState() {

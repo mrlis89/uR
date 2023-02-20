@@ -30,6 +30,8 @@ class DbCommentListAdapter() : RecyclerView.Adapter<DbCommentViewHolder>() {
             saveCommentBtn.isVisible = false
             commentAuthor.text = dbComment?.commentAuthor
             commentText.text = dbComment?.commentText
+            likesCount.text = dbComment?.likesCount.toString()
+            rootLayout.setPadding(10, 10, 10, 10)
         }
     }
 

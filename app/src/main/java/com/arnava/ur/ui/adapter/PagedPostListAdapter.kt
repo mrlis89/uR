@@ -17,8 +17,8 @@ import com.bumptech.glide.request.RequestOptions
 
 class PagedPostListAdapter(
     private val onPostClick: (ThingData) -> Unit,
-    private val onSaveClick: (String) -> Unit,
-    private val onUnsaveClick: (String) -> Unit,
+    private val onSaveClick: (ThingData) -> Unit,
+    private val onUnsaveClick: (ThingData) -> Unit,
     private val onAuthorClick: (String) -> Unit,
 ) : PagingDataAdapter<Thing, PostListViewHolder>(PostDiffUtilCallback()) {
     private val itemExpandedMap = mutableMapOf<Int, Boolean>()
@@ -30,18 +30,18 @@ class PagedPostListAdapter(
 
     override fun onBindViewHolder(holder: PostListViewHolder, position: Int) {
         val postData = getItem(position)?.data
-        itemExpandedMap.putIfAbsent(position, false)
+        itemExpandedMap.putIfAbsent(position, true)
         with(holder.binding) {
             subredditBtn.text = "r/${postData?.subreddit}"
             changeSavePostButton(postData)
             saveBtn.setOnClickListener {
                 if (postData?.saved == true) {
                     postData.saved = false
-                    postData.fullNameID?.let { onUnsaveClick(it) }
+                    onUnsaveClick(postData)
                     changeSavePostButton(postData)
                 } else {
                     postData?.saved = true
-                    postData?.fullNameID?.let { onSaveClick(it) }
+                    postData?.let { onSaveClick(it) }
                     changeSavePostButton(postData)
                 }
             }

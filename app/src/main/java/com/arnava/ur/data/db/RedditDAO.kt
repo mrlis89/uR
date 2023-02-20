@@ -12,6 +12,9 @@ interface RedditDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertPost(photoDb: DbPost): Long
 
+    @Query("DELETE FROM postTable WHERE id = :postId")
+    suspend fun deletePost(postId: String)
+
     @Query("DELETE FROM postTable")
     suspend fun dropPosts()
 
@@ -21,6 +24,9 @@ interface RedditDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertComment(dbComment: DbComment): Long
+
+    @Query("DELETE FROM commentTable WHERE id = :commentId")
+    suspend fun deleteComment(commentId: String)
 
     @Query("DELETE FROM commentTable")
     suspend fun dropComments()

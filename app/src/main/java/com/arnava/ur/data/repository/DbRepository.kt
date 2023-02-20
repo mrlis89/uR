@@ -8,7 +8,9 @@ import javax.inject.Inject
 class DbRepository @Inject constructor (private val redditDAO: RedditDAO) {
     fun getPosts() = redditDAO.getAllPosts()
     suspend fun addPost(dbPost: DbPost) = redditDAO.insertPost(dbPost)
+    suspend fun deletePost(postId: String) = redditDAO.deletePost(postId)
 
     fun getComments() = redditDAO.getAllComments()
     suspend fun addComment(dbComment: DbComment) = redditDAO.insertComment(dbComment)
+    suspend fun deleteComment(commentId: String) = redditDAO.deleteComment(commentId)
 }

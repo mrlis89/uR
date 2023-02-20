@@ -18,8 +18,8 @@ class CommentListAdapter(
     private val onThumbUpClick: (String) -> Unit,
     private val onThumbDownClick: (String) -> Unit,
     private val onThumbResetClick: (String) -> Unit,
-    private val onSaveComment: (String) -> Unit,
-    private val onUnsaveComment: (String) -> Unit,
+    private val onSaveComment: (ThingData) -> Unit,
+    private val onUnsaveComment: (ThingData) -> Unit,
 ) : RecyclerView.Adapter<CommentListViewHolder>() {
     private val dateFormat = SimpleDateFormat(DATE_FORMAT)
 
@@ -42,11 +42,11 @@ class CommentListAdapter(
             saveCommentBtn.setOnClickListener {
                 if (commentData?.saved == true) {
                     commentData.saved = false
-                    commentData.fullNameID?.let { onUnsaveComment(it) }
+                    onUnsaveComment(commentData)
                     changeSaveCommentButton(commentData)
                 } else {
                     commentData?.saved = true
-                    commentData?.fullNameID?.let { onSaveComment(it) }
+                    commentData?.let { onSaveComment(it) }
                     changeSaveCommentButton(commentData)
                 }
             }

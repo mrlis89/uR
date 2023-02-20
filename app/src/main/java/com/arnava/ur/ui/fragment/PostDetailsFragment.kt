@@ -107,7 +107,7 @@ class PostDetailsFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.commentsFlow.collect { comments ->
                 if (!comments.isNullOrEmpty()) binding.progressBtn.isVisible = false
-                comments?.let {commentListAdapter.setData(it)}
+                comments?.let { commentListAdapter.setData(it) }
             }
         }
 
@@ -126,12 +126,16 @@ class PostDetailsFragment : Fragment() {
         viewModel.resetVote(commentId)
     }
 
-    private fun saveComment(commentId: String) {
-        viewModel.saveComment(commentId)
+    private fun saveComment(comment: ThingData) {
+        comment.fullNameID?.let { viewModel.saveComment(it) }
+        viewModel.saveCommentToDb(comment)
     }
 
-    private fun unsaveComment(commentId: String) {
-        viewModel.unsaveComment(commentId)
+    private fun unsaveComment(comment: ThingData) {
+        comment.fullNameID?.let {
+            viewModel.unsaveComment(it)
+            viewModel.deleteCommentFromDb(it)
+        }
     }
 
     override fun onDestroyView() {

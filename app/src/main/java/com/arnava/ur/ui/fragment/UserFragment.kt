@@ -65,7 +65,8 @@ class UserFragment : Fragment() {
             viewModel.userInfoFlow.collect { userInfo ->
                 with(binding) {
                     userInfo?.userInfoData?.let { infoData ->
-                        val imageUrl = if (infoData.snoovatarImg != "") infoData.snoovatarImg else infoData.iconImg
+                        val imageUrl =
+                            if (infoData.snoovatarImg != "") infoData.snoovatarImg else infoData.iconImg
                         val image = imageUrl.substringBefore("?")
                         Glide
                             .with(this@UserFragment)
@@ -117,8 +118,17 @@ class UserFragment : Fragment() {
         }
     }
 
-    private fun onSaveClick(postId: String) = viewModel.savePost(postId)
-    private fun onUnsaveClick(postId: String) = viewModel.unsavePost(postId)
+    private fun onSaveClick(data: ThingData) {
+        data.fullNameID?.let { viewModel.savePost(it) }
+        viewModel.savePostToDb(data)
+    }
+
+    private fun onUnsaveClick(data: ThingData) {
+        data.fullNameID?.let {
+            viewModel.unsavePost(it)
+            viewModel.deletePostFromDb(it)
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

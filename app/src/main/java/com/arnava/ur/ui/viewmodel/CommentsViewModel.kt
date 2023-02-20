@@ -2,9 +2,11 @@ package com.arnava.ur.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.arnava.ur.data.db.DbComment
 import com.arnava.ur.data.model.entity.Thing
-import com.arnava.ur.data.model.entity.Test
+import com.arnava.ur.data.model.entity.ThingData
 import com.arnava.ur.data.model.users.UserInfo
+import com.arnava.ur.data.repository.DbRepository
 import com.arnava.ur.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +15,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CommentsViewModel @Inject constructor(private val repository: MainRepository) :
+class CommentsViewModel @Inject constructor(
+    private val repository: MainRepository,
+    private val dbRepository: DbRepository
+) :
     ViewModel() {
 
     private val _commentsFlow = MutableStateFlow<List<Thing>?>(emptyList())
@@ -34,11 +39,13 @@ class CommentsViewModel @Inject constructor(private val repository: MainReposito
             repository.upVote(commentId)
         }
     }
+
     fun downVote(commentId: String) {
         viewModelScope.launch {
             repository.downVote(commentId)
         }
     }
+
     fun resetVote(commentId: String) {
         viewModelScope.launch {
             repository.resetVote(commentId)
@@ -50,16 +57,19 @@ class CommentsViewModel @Inject constructor(private val repository: MainReposito
             repository.saveThing("comments", commentId)
         }
     }
+
     fun unsaveComment(commentId: String) {
         viewModelScope.launch {
             repository.unsaveThing(commentId)
         }
     }
+
     fun savePost(postId: String) {
         viewModelScope.launch {
             repository.saveThing("posts", postId)
         }
     }
+
     fun unsavePost(postId: String) {
         viewModelScope.launch {
             repository.unsaveThing(postId)
@@ -71,14 +81,36 @@ class CommentsViewModel @Inject constructor(private val repository: MainReposito
             repository.addToFriends(name)
         }
     }
+
     fun deleteFromFriends(name: String) {
         viewModelScope.launch {
             repository.deleteFromFriends(name)
         }
     }
+
     fun loadUserInfo(userName: String) {
         viewModelScope.launch {
             _userInfoFlow.value = repository.getUserInfo(userName)
+        }
+    }
+
+    fun deleteCommentFromDb(commentId: String) {
+        viewModelScope.launch {
+            dbRepository.deleteComment(commentId)
+        }
+    }
+
+    fun saveCommentToDb(comment: ThingData) {
+        viewModelScope.launch {
+            dbRepository.addComment(
+                DbComment(
+                    comment.fullNameID ?: "",
+                    comment.subreddit ?: "",
+                    comment.body ?: "",
+                    comment.author ?: "",
+                    comment.score ?: 0
+                )
+            )
         }
     }
 

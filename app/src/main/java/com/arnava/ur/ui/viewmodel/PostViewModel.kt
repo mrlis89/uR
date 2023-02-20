@@ -90,17 +90,9 @@ class PostViewModel @Inject constructor(
             )
         }
     }
-    fun saveCommentToDb(comment: ThingData) {
+    fun deletePostFromDb(postId: String) {
         viewModelScope.launch {
-            dbRepository.addComment(
-                DbComment(
-                    comment.fullNameID ?: "",
-                    comment.subreddit ?: "",
-                    comment.body ?: "",
-                    comment.author ?: "",
-                    comment.score ?: 0
-                    )
-            )
+            dbRepository.deletePost(postId)
         }
     }
 

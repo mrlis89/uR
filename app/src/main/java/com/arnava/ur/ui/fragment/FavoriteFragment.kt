@@ -125,12 +125,12 @@ class FavoriteFragment : Fragment() {
         viewModel.resetVote(commentId)
     }
 
-    private fun saveComment(commentId: String) {
-        viewModel.saveComment(commentId)
+    private fun saveComment(comment: ThingData) {
+        comment.fullNameID?.let { viewModel.saveComment(it) }
     }
 
-    private fun unsaveComment(commentId: String) {
-        viewModel.unsaveComment(commentId)
+    private fun unsaveComment(comment: ThingData) {
+        comment.fullNameID?.let { viewModel.unsaveComment(it) }
     }
 
     private fun onPostClick(item: ThingData) {
@@ -155,8 +155,8 @@ class FavoriteFragment : Fragment() {
         }
     }
 
-    private fun onSavePostClick(postId: String) = viewModel.savePost(postId)
-    private fun onUnsavePostClick(postId: String) = viewModel.unsavePost(postId)
+    private fun onSavePostClick(data: ThingData) = data.fullNameID?.let { viewModel.savePost(it) }
+    private fun onUnsavePostClick(data: ThingData) = data.fullNameID?.let { viewModel.unsavePost(it) }
 
     override fun onDestroyView() {
         super.onDestroyView()

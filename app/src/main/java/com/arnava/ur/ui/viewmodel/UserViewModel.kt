@@ -6,8 +6,11 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.arnava.ur.data.db.DbPost
 import com.arnava.ur.data.model.entity.Thing
+import com.arnava.ur.data.model.entity.ThingData
 import com.arnava.ur.data.model.users.UserInfo
+import com.arnava.ur.data.repository.DbRepository
 import com.arnava.ur.data.repository.MainRepository
 import com.arnava.ur.ui.pagingsource.SavedPostPagingSource
 import com.arnava.ur.ui.pagingsource.TopPostPagingSource
@@ -22,6 +25,7 @@ import javax.inject.Inject
 @HiltViewModel
 class UserViewModel @Inject constructor(
     private val repository: MainRepository,
+    private val dbRepository: DbRepository,
 ) : ViewModel() {
     private val _usersPosts = MutableStateFlow<Flow<PagingData<Thing>>?>(null)
     val usersPosts = _usersPosts.asStateFlow()
@@ -62,6 +66,25 @@ class UserViewModel @Inject constructor(
     fun unsavePost(postId: String) {
         viewModelScope.launch {
             repository.unsaveThing(postId)
+        }
+    }
+
+    fun savePostToDb(post: ThingData) {
+        viewModelScope.launch {
+            dbRepository.addPost(
+                DbPost(
+                    post.fullNameID ?: "",
+                    post.subreddit ?: "",
+                    post.title ?: "",
+                    post.author ?: "",
+                    post.url ?: ""
+                )
+            )
+        }
+    }
+    fun deletePostFromDb(postId: String) {
+        viewModelScope.launch {
+            dbRepository.deletePost(postId)
         }
     }
 }

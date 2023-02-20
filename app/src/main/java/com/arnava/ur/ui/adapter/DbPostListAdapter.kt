@@ -6,7 +6,9 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.arnava.ur.R
 import com.arnava.ur.data.db.DbPost
+import com.arnava.ur.databinding.DbPostLayoutBinding
 import com.arnava.ur.databinding.PostLayoutBinding
+import com.arnava.ur.utils.common.StringUtils.isImage
 import com.bumptech.glide.Glide
 
 class DbPostListAdapter() : RecyclerView.Adapter<DbPostViewHolder>() {
@@ -18,22 +20,24 @@ class DbPostListAdapter() : RecyclerView.Adapter<DbPostViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DbPostViewHolder {
-        val binding = PostLayoutBinding.inflate(LayoutInflater.from(parent.context))
+        val binding = DbPostLayoutBinding.inflate(LayoutInflater.from(parent.context))
         return DbPostViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: DbPostViewHolder, position: Int) {
         val dbPost = data[position]
         with(holder.binding) {
-            followBtn.isVisible = false
-            saveBtn.isVisible = false
-            gotoDetailsBtn.isVisible = false
+            postName.setOnClickListener {
+                if (dbPost?.imageUrl?.isImage() == true) {
+                    bannerView.isVisible = !bannerView.isVisible
+                }
+            }
             authorName.text = dbPost?.postAuthor
             postName.text = dbPost?.postText
+            subredditBtn.text = "r/${dbPost?.subredditName}"
             Glide
                 .with(holder.itemView)
                 .load(dbPost?.imageUrl)
-                .placeholder(R.drawable.placeholder_photo)
                 .into(bannerView)
         }
     }
@@ -43,5 +47,5 @@ class DbPostListAdapter() : RecyclerView.Adapter<DbPostViewHolder>() {
     }
 }
 
-class DbPostViewHolder(val binding: PostLayoutBinding) :
+class DbPostViewHolder(val binding: DbPostLayoutBinding) :
     RecyclerView.ViewHolder(binding.root)
