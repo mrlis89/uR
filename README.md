@@ -13,8 +13,8 @@ This App based on Reddit API
 - your profile details
 
 # Screenshots
-<img src="/screenshots/photo_2023-02-28_13-09-51.png" width="250"/>  <img src="/screenshots/photo_2023-02-28_13-09-49 (2).png" width="250"/>  <img src="/screenshots/photo_2023-02-28_13-09-49.png" width="250"/>
-<img src="/screenshots/photo_2023-02-28_13-09-47.png" width="250"/>  <img src="/screenshots/photo_2023-02-28_13-09-45.png" width="250"/>  <img src="/screenshots/photo_2023-02-28_13-09-43.png" width="250"/>
+<img src="/screenshots/photo_2023-02-28_13-09-51.jpg" width="250"/>  <img src="/screenshots/photo_2023-02-28_13-09-49 (2).jpg" width="250"/>  <img src="/screenshots/photo_2023-02-28_13-09-49.jpg" width="250"/>
+<img src="/screenshots/photo_2023-02-28_13-09-47.jpg" width="250"/>  <img src="/screenshots/photo_2023-02-28_13-09-45.jpg" width="250"/>  <img src="/screenshots/photo_2023-02-28_13-09-43.jpg" width="250"/>
 
 
 
