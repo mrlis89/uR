@@ -96,18 +96,18 @@ class MainActivity : AppCompatActivity() {
         if (authViewModel.isFirstRun()) {
             val intent = Intent(this, OnboardingActivity::class.java)
             startActivity(intent)
-        }
-
-        if (connectivityObserver.isNetworkConnected()){
-            if (authViewModel.hasRefreshToken()) {
-                authViewModel.refreshToken()
-            } else {
-                val intent = Intent(this, AuthActivity::class.java)
-                startActivity(intent)
-            }
         } else {
-            navController.navigate(R.id.offlineDataFragment)
-            binding.navView.isVisible = false
+            if (connectivityObserver.isNetworkConnected()) {
+                if (authViewModel.hasRefreshToken()) {
+                    authViewModel.refreshToken()
+                } else {
+                    val intent = Intent(this, AuthActivity::class.java)
+                    startActivity(intent)
+                }
+            } else {
+                navController.navigate(R.id.offlineDataFragment)
+                binding.navView.isVisible = false
+            }
         }
 
     }
