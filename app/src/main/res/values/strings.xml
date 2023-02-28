@@ -11,14 +11,14 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="onboard_text_first_header">Добро пожаловать в Humblr</string>
+    <string name="onboard_text_first_header">Добро пожаловать в uR</string>
     <string name="onboard_text_first">Здесь собраны сообщества по всевозможным интересам</string>
-    <string name="onboard_text_second_header">SubHumblr</string>
-    <string name="onboard_text_second">Ты можешь найти новые сабы по интересам и посмотреть сабы, на которые подписан</string>
+    <string name="onboard_text_second_header">Только интересное</string>
+    <string name="onboard_text_second">Ты можешь найти новые посты и посмотреть посты, на которые подписан</string>
     <string name="onboard_text_third_header">Делись и сохраняй</string>
-    <string name="onboard_text_third">Вкладка избранное хранит закладки с комментариями и сабами. В профиле ты найдёшь информацию о себе.
+    <string name="onboard_text_third">Вкладка избранное хранит закладки с комментариями и постами. В профиле ты найдёшь информацию о себе.
 </string>
-    <string name="humblr_text">Найди единомышленников с Humblr</string>
+    <string name="humblr_text">Ищи то, что интересно тебе</string>
     <string name="skip_text">Пропустить</string>
     <string name="complete_text">Готово</string>
     <string name="follow">Подписаться</string>
