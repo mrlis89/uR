@@ -11,13 +11,13 @@ This App based on Reddit API
 - friend list
 - your profile details
 
-# Screenshots
+## Screenshots
 <img src="/screenshots/photo_2023-02-28_13-09-51.jpg" width="250"/>  <img src="/screenshots/photo_2023-02-28_13-09-49 (2).jpg" width="250"/>  <img src="/screenshots/photo_2023-02-28_13-09-49.jpg" width="250"/>
 <img src="/screenshots/photo_2023-02-28_13-09-47.jpg" width="250"/>  <img src="/screenshots/photo_2023-02-28_13-09-45.jpg" width="250"/>  <img src="/screenshots/photo_2023-02-28_13-09-43.jpg" width="250"/>
 
 
 
-# Project uses:
+## Project uses:
 - [MVVM architecture]()
 - [Koltin coroutines]()
 - [Retrofit](http://square.github.io/retrofit/) / [OkHttp](http://square.github.io/okhttp/)
