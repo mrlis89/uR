@@ -2,8 +2,7 @@
 
 This App based on Reddit API
 
-
-#Key features:
+## Key features:
 
 - top/new post showing
 - post search
